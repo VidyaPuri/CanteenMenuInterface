@@ -1,0 +1,56 @@
+﻿<Window x:Class="CanteenMenuInterface.Views.ShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CanteenMenuInterface.Views"
+        mc:Ignorable="d"
+        Title="ShellView" Height="450" Width="800" Background="#fffcf9">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="5"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <Label  Content="Menu" FontSize="18"></Label>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Name"/>
+                <TextBox Text="{Binding MenuNameInput, FallbackValue='Menu name'}" Width="50" VerticalAlignment="Center" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Description"/>
+                <TextBox Text="{Binding MenuDescriptionInput,FallbackValue='Menu description'}" Width="50" VerticalAlignment="Center" />
+            </StackPanel>
+            <Button x:Name="AddMenuToDB" Content="Add to DB" />
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="2">
+            <ListView  ItemsSource="{Binding MenuList}" MinHeight="85" MinWidth="100">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Id}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18"/>
+                            <TextBlock Text="   " Height="20"/>
+                            <TextBlock Text="{Binding Name}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
+                            <TextBlock Text="   " Height="20"/>
+                            <TextBlock Text="{Binding Description}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button x:Name="ShowMenus" Content="Show" />
+
+        </StackPanel>
+    </Grid>
+</Window>

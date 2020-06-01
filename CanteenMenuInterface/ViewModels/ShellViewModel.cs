@@ -12,11 +12,12 @@ namespace CanteenMenuInterface.ViewModels
     {
         public ShellViewModel()
         {
+           
 
         }
-         
-        #region Private Members
 
+        #region Private Members
+        DataAccess db = new DataAccess();
         private string _MenuNameInput;
         private string _MenuDescriptionInput;
         private List<MenuModel> _MenuList;
@@ -63,12 +64,11 @@ namespace CanteenMenuInterface.ViewModels
         /// </summary>
         public void AddMenuToDB()
         {
-
+            db.InsertMenu(MenuNameInput, MenuDescriptionInput);
         }
 
         public void ShowMenus()
         {
-            DataAccess db = new DataAccess();
 
             MenuList = db.GetMenus();
         }

@@ -8,8 +8,8 @@ namespace CanteenMenuInterface.Models
 {
     public class MenuModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int MenuKey { get; set; }
+        public string MenuName { get; set; }
         public string Description { get; set; }
     }
 }

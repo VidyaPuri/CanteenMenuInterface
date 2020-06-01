@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CanteenMenuInterface.Views"
         mc:Ignorable="d"
-        Title="ShellView" Height="450" Width="800" Background="#fffcf9">
+        Title="ShellView" Height="600" Width="1280" Background="#fffcf9">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="5"></RowDefinition>
         </Grid.RowDefinitions>
@@ -18,39 +18,220 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"></ColumnDefinition>
             <ColumnDefinition Width="auto"></ColumnDefinition>
-            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="20"></ColumnDefinition>
             <ColumnDefinition Width="auto"></ColumnDefinition>
             <ColumnDefinition Width="5"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="1" Grid.Column="1">
-            <Label  Content="Menu" FontSize="18"></Label>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Name"/>
-                <TextBox Text="{Binding MenuNameInput, FallbackValue='Menu name'}" Width="50" VerticalAlignment="Center" />
+        <!-- MENUS -->
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="20"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Content="Menu" FontSize="18" ></Label>
+            <Label Grid.Row="1" Grid.Column="0" Content="Name"/>
+            <TextBox Grid.Row="1" Grid.Column="1" 
+                     Text="{Binding MenuNameInput, FallbackValue='Menu name'}" MinWidth="70" VerticalAlignment="Center" />
+            <Label Grid.Row="2" Content="Description"/>
+            <TextBox Grid.Row="2" Grid.Column="1" 
+                     Text="{Binding MenuDescriptionInput,FallbackValue='Menu description'}" MinWidth="70" VerticalAlignment="Center" />
+            
+            <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                <Button x:Name="AddMenu" Content="Add Menu" Margin="3" />
+                <Button x:Name="EditSelectedMenu" Content="Edit Menu" Margin="3" />
+                <Button x:Name="DeleteSelectedMenu" Content="Delete Menu" Margin="3" />
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Description"/>
-                <TextBox Text="{Binding MenuDescriptionInput,FallbackValue='Menu description'}" Width="50" VerticalAlignment="Center" />
-            </StackPanel>
-            <Button x:Name="AddMenuToDB" Content="Add to DB" />
-        </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="2">
-            <ListView  ItemsSource="{Binding MenuList}" MinHeight="85" MinWidth="100">
+
+
+            <ListView Grid.Row="1" Grid.Column="3" Grid.RowSpan="5" MinHeight="85" MinWidth="100" 
+                ItemsSource="{Binding MenuList}"  SelectedIndex="{Binding SelectedMenuIdx}" SelectedItem="{Binding SelectedMenu}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Id}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18"/>
+                            <TextBlock Text="{Binding MenuKey}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18"/>
                             <TextBlock Text="   " Height="20"/>
-                            <TextBlock Text="{Binding Name}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
+                            <TextBlock Text="{Binding MenuName}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
                             <TextBlock Text="   " Height="20"/>
                             <TextBlock Text="{Binding Description}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button x:Name="ShowMenus" Content="Show" />
+        </Grid>
+        
+        <!-- USERS-->
+        <Grid Grid.Row="1" Grid.Column="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="20"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
 
-        </StackPanel>
+            <Label Grid.Row="0" Content="Users" FontSize="18" />
+            
+            <Label Grid.Row="1" Content="First Name"/>
+            <Label Grid.Row="2" Content="Second Name"/>
+            <Label Grid.Row="3" Content="Email"/>
+
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding UserFirstName}" Foreground="#FFB4B4B4" VerticalAlignment="Center" Height="18" MinWidth="100" Margin="3"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding UserLastName}" Foreground="#FFB4B4B4" VerticalAlignment="Center" Height="18" MinWidth="100" Margin="3"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding UserEmail}" Foreground="#FFB4B4B4" VerticalAlignment="Center" Height="18" MinWidth="100" Margin="3"/>
+            <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal">
+                <Button x:Name="AddUser" Content="Add User" Margin="3"/>
+                <Button x:Name="EditSelectedUser" Content="Edit User" Margin="3"/>
+                <Button x:Name="DeleteSelectedUser" Content="Delete User" Margin="3"/>
+            </StackPanel>
+
+            <ListView Grid.Row="1" Grid.Column="3" Grid.RowSpan="5" MinHeight="85" MinWidth="200"
+                ItemsSource="{Binding UserList}"  SelectedIndex="{Binding SelectedUserIdx}" SelectedItem="{Binding SelectedUser}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding UserKey}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18"/>
+                            <TextBlock Text="   " Height="20"/>
+                            <TextBlock Text="{Binding FirstName}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
+                            <TextBlock Text="   " Height="20"/>
+                            <TextBlock Text="{Binding LastName}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/><TextBlock Text="   " Height="20"/>
+                            <TextBlock Text="   " Height="20"/>
+                            <TextBlock Text="{Binding Email}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </Grid>
+
+        <!-- Weekly Timetable -->
+        <Grid Grid.Row="3" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" ></ColumnDefinition>
+                <ColumnDefinition Width="auto" ></ColumnDefinition>
+                <ColumnDefinition Width="auto" ></ColumnDefinition>
+                <ColumnDefinition Width="auto" ></ColumnDefinition>
+                <ColumnDefinition Width="auto" ></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Content="Monday" Width="80"/>
+            <Label Grid.Row="0" Grid.Column="1" Content="Tuesday" Width="80"/>
+            <Label Grid.Row="0" Grid.Column="2" Content="Wednesday" Width="80"/>
+            <Label Grid.Row="0" Grid.Column="3" Content="Thursday" Width="80"/>
+            <Label Grid.Row="0" Grid.Column="4" Content="Friday" Width="80"/>
+
+            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+                <ItemsControl ItemsSource="{Binding MenuList}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding MenuList}" Width="100">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <TextBlock Text="{Binding MenuName}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <ListBox ItemsSource="{Binding MenuList}" SelectedItem="{Binding SelectedItem}">
+                    <ListBox.ItemContainerStyle>
+                        <!-- Style to get rid of the selection visual -->
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <ContentPresenter />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <RadioButton Content="{Binding MenuName}" GroupName="Properties">
+                                <!-- Binding IsChecked to IsSelected requires no support code -->
+                                <RadioButton.IsChecked>
+                                    <Binding Path="IsSelected"
+                             RelativeSource="{RelativeSource AncestorType=ListBoxItem}"
+                             Mode="TwoWay" />
+                                </RadioButton.IsChecked>
+                            </RadioButton>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <StackPanel >
+                    <ComboBox ItemsSource="{Binding MenuList}" Width="100">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" >
+                                    <TextBlock Text="{Binding MenuName}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+                <DataGrid x:Name="SelectedMenusList">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Monday" >
+                            <!--<DataGridTemplateColumn.CellTemplate >
+                                <DataTemplate >
+                                    <TextBlock Text="{Binding MenuList}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>-->
+                            <DataGridTemplateColumn.CellEditingTemplate>
+                                <DataTemplate>
+                                    <ComboBox ItemsSource="{Binding MenuList}" Width="100">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal" >
+                                                    <TextBlock Text="{Binding MenuName}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellEditingTemplate>
+                        </DataGridTemplateColumn>
+                        
+                    </DataGrid.Columns>
+                    
+                </DataGrid>
+            </StackPanel>
+            
+        </Grid>
     </Grid>
 </Window>

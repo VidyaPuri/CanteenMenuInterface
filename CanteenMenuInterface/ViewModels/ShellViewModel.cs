@@ -1,7 +1,9 @@
 ﻿using Caliburn.Micro;
+using CanteenMenuInterface.Helpers;
 using CanteenMenuInterface.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +17,14 @@ namespace CanteenMenuInterface.ViewModels
             ShowMenus();
             ShowUsers();
             FillTheList();
+
+            CurrentDate = DateTime.Today;
+            CurrentWeek = DateHelper.GetCurrentWeek();
+            MondayDate = DateHelper.GetThisWeekDays()[0];
+            TuesdayDate = DateHelper.GetThisWeekDays()[1];
+            WednesdayDate = DateHelper.GetThisWeekDays()[2];
+            ThursdayDate = DateHelper.GetThisWeekDays()[3];
+            FridayDate = DateHelper.GetThisWeekDays()[4];
         }
 
         DataAccess db = new DataAccess();
@@ -300,22 +310,30 @@ namespace CanteenMenuInterface.ViewModels
                 case "Monday":
                     WeeklyMenu.MondayList.Add(menuModel);
                     MondayMenu.Add(menuModel);
+                    db.InsertDateMenu(MondayDate, menuModel.MenuKey);
                     break;
                 case "Tuesday":
                     WeeklyMenu.TusedayList.Add(menuModel);
                     TuesdayMenu.Add(menuModel);
+                    db.InsertDateMenu(TuesdayDate, menuModel.MenuKey);
+
                     break;
                 case "Wednesday":
                     WeeklyMenu.WednesdayList.Add(menuModel);
                     WednesdayMenu.Add(menuModel);
+                    db.InsertDateMenu(WednesdayDate, menuModel.MenuKey);
+
                     break;
                 case "Thursday":
                     WeeklyMenu.ThursdayList.Add(menuModel);
                     ThursdayMenu.Add(menuModel);
+                    db.InsertDateMenu(ThursdayDate, menuModel.MenuKey);
+
                     break;
                 case "Friday":
                     WeeklyMenu.FridayList.Add(menuModel);
                     FridayMenu.Add(menuModel);
+                    db.InsertDateMenu(FridayDate, menuModel.MenuKey);
                     break;
             }
             WeeklyMenu.MondayList.Refresh();
@@ -334,26 +352,114 @@ namespace CanteenMenuInterface.ViewModels
                 case "Monday":
                     WeeklyMenu.MondayList.Remove(menuModel);
                     MondayMenu.Remove(menuModel);
+                    db.DeleteDateMenuByDateAndMenuKey(menuModel.MenuKey, MondayDate);
                     break;
                 case "Tuesday":
                     WeeklyMenu.TusedayList.Remove(menuModel);
                     TuesdayMenu.Remove(menuModel);
+                    db.DeleteDateMenuByDateAndMenuKey(menuModel.MenuKey, TuesdayDate);
                     break;
                 case "Wednesday":
                     WeeklyMenu.WednesdayList.Remove(menuModel);
                     WednesdayMenu.Remove(menuModel);
+                    db.DeleteDateMenuByDateAndMenuKey(menuModel.MenuKey, WednesdayDate);
                     break;
                 case "Thursday":
                     WeeklyMenu.ThursdayList.Remove(menuModel);
                     ThursdayMenu.Remove(menuModel);
+                    db.DeleteDateMenuByDateAndMenuKey(menuModel.MenuKey, ThursdayDate);
                     break;
                 case "Friday":
                     WeeklyMenu.FridayList.Remove(menuModel);
                     FridayMenu.Remove(menuModel);
+                    db.DeleteDateMenuByDateAndMenuKey(menuModel.MenuKey, FridayDate);
                     break;
             }
-         }
+
+            db.DeleteDateMenu(menuModel.MenuKey);
+
+        }
+
 
         #endregion
+
+        #region Date Methods
+
+        private int _CurrentWeek;
+        private DateTime _CurrentDate;
+        private DateTime _MondayDate;
+        private DateTime _TuesdayDate;
+        private DateTime _WednesdayDate;
+        private DateTime _ThursdayDate;
+        private DateTime _FridayDate;
+
+        public int CurrentWeek
+        {
+            get { return _CurrentWeek; }
+            set => Set(ref _CurrentWeek, value);
+        }
+
+        public DateTime CurrentDate
+        {
+            get { return _CurrentDate; }
+            set => Set(ref _CurrentDate, value);
+        }
+
+        public DateTime MondayDate
+        {
+            get { return _MondayDate; }
+            set => Set(ref _MondayDate, value);
+        }
+
+        public DateTime TuesdayDate
+        {
+            get { return _TuesdayDate; }
+            set => Set(ref _TuesdayDate, value);
+        }
+
+        public DateTime WednesdayDate
+        {
+            get { return _WednesdayDate; }
+            set => Set(ref _WednesdayDate, value);
+        }
+
+        public DateTime ThursdayDate
+        {
+            get { return _ThursdayDate; }
+            set => Set(ref _ThursdayDate, value);
+        }
+
+        public DateTime FridayDate
+        {
+            get { return _FridayDate; }
+            set => Set(ref _FridayDate, value);
+        }
+
+        public void PreviousWeek()
+        {
+            CurrentDate = CurrentDate.AddDays(-7);
+            ChangedDate();
+        }
+
+        public void NextWeek()
+        {
+            CurrentDate = CurrentDate.AddDays(7);
+            ChangedDate();
+        }
+
+        private void ChangedDate()
+        {
+            CurrentWeek = DateHelper.GetChangedWeek(CurrentDate);
+            MondayDate = DateHelper.GetSelectedWeekDays(CurrentDate)[0];
+            TuesdayDate = DateHelper.GetSelectedWeekDays(CurrentDate)[1];
+            WednesdayDate = DateHelper.GetSelectedWeekDays(CurrentDate)[2];
+            ThursdayDate = DateHelper.GetSelectedWeekDays(CurrentDate)[3];
+            FridayDate = DateHelper.GetSelectedWeekDays(CurrentDate)[4];
+        }
+
+        #endregion
+
+
+
     }
 }

@@ -73,7 +73,8 @@
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="DataAccess.cs" />
-    <Compile Include="Helpers\Helper.cs" />
+    <Compile Include="Helpers\ConnectionStringHelper.cs" />
+    <Compile Include="Helpers\DateHelper.cs" />
     <Compile Include="Models\DateMenuModel.cs" />
     <Compile Include="Models\MenuModel.cs" />
     <Compile Include="Models\UserModel.cs" />

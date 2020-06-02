@@ -2,7 +2,7 @@
 
 namespace CanteenMenuInterface.Helpers
 {
-    public static class Helper
+    public static class ConnectionStringHelper
     {
         public static string CnnVal(string name)
         {

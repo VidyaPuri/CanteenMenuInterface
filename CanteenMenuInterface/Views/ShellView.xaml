@@ -11,7 +11,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="5"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="5"></RowDefinition>
         </Grid.RowDefinitions>
@@ -59,7 +59,7 @@
             </StackPanel>
 
 
-            <ListView Grid.Row="1" Grid.Column="3" Grid.RowSpan="5" MinHeight="85" MinWidth="100" 
+            <ListView Grid.Row="1" Grid.Column="3" Grid.RowSpan="7" MinHeight="85" MinWidth="100" 
                 ItemsSource="{Binding MenuList}"  SelectedIndex="{Binding SelectedMenuIdx}" SelectedItem="{Binding SelectedMenu}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -128,15 +128,22 @@
 
         </Grid>
 
-        <Label Grid.Row="2" Grid.Column="1" Content="OPERATOR PANEL" />
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Margin="0 10">
+            <Label  Content="OPERATOR PANEL" />
+            <Label Content="Week #"/>
+            <Label  Content="{Binding CurrentWeek}"/>
+            <Button x:Name="PreviousWeek" Content="Previous Week" Margin="10 0"/>
+            <Button x:Name="NextWeek" Content="Next Week" Margin="10 0"/>
+        </StackPanel>
+        
         <!-- Weekly Timetable -->
         <Grid Grid.Row="3" Grid.Column="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" ></ColumnDefinition>
-                <ColumnDefinition Width="auto" ></ColumnDefinition>
-                <ColumnDefinition Width="auto" ></ColumnDefinition>
-                <ColumnDefinition Width="auto" ></ColumnDefinition>
-                <ColumnDefinition Width="auto" ></ColumnDefinition>
+                <ColumnDefinition Width="120" ></ColumnDefinition>
+                <ColumnDefinition Width="120" ></ColumnDefinition>
+                <ColumnDefinition Width="120" ></ColumnDefinition>
+                <ColumnDefinition Width="120" ></ColumnDefinition>
+                <ColumnDefinition Width="120" ></ColumnDefinition>
             </Grid.ColumnDefinitions>
             
             <Grid.RowDefinitions>
@@ -146,11 +153,27 @@
                 <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0" Content="Monday" Width="80"/>
-            <Label Grid.Row="0" Grid.Column="1" Content="Tuesday" Width="80"/>
-            <Label Grid.Row="0" Grid.Column="2" Content="Wednesday" Width="80"/>
-            <Label Grid.Row="0" Grid.Column="3" Content="Thursday" Width="80"/>
-            <Label Grid.Row="0" Grid.Column="4" Content="Friday" Width="80"/>
+            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Width="auto">
+                <Label  Content="Monday" />
+                <Label  Content="{Binding MondayDate, FallbackValue='Date'}" FontSize="8" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Width="auto">
+                <Label  Content="Tuesday" />
+                <Label  Content="{Binding TuesdayDate, FallbackValue='Date'}" FontSize="8" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Width="auto">
+                <Label  Content="Wednesday" />
+                <Label  Content="{Binding WednesdayDate, FallbackValue='Date'}"  FontSize="8" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Horizontal" Width="auto">
+                <Label  Content="Thursday" />
+                <Label  Content="{Binding ThursdayDate, FallbackValue='Date'}" FontSize="8" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Grid.Row="0" Grid.Column="4" Orientation="Horizontal" Width="auto">
+                <Label  Content="Friday" />
+                <Label  Content="{Binding FridayDate, FallbackValue='Date'}" FontSize="8" VerticalAlignment="Center"/>
+            </StackPanel>
+
 
             <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
                 <ItemsControl ItemsSource="{Binding MenuList}">
@@ -397,7 +420,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <ListBox Grid.Row="2" ItemsSource="{Binding MondayMenu}" SelectedItem="{Binding SelectedItem}">
+            <!--<ListBox Grid.Row="2" ItemsSource="{Binding MondayMenu}" SelectedItem="{Binding SelectedItem}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <RadioButton Content="{Binding MenuName}" GroupName="Properties" >
@@ -410,6 +433,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <Button x:Name="DateButton" Content="Date Button" Grid.Column="0" Grid.Row="3" />-->
 
         </Grid>
     </Grid>

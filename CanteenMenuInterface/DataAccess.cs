@@ -19,7 +19,7 @@ namespace CanteenMenuInterface
         /// <returns></returns>
         public List<MenuModel> GetMenus()
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("CanteenMenuDB")))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
             {
                 //var output = connection.Query<MenuModel>("select * from Menu").ToList();
                 var output = connection.Query<MenuModel>("dbo.MenuViewAll").ToList();
@@ -35,7 +35,7 @@ namespace CanteenMenuInterface
         /// <param name="description"></param>
         public void InsertMenu(string name, string description)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("CanteenMenuDB")))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
             {
                 MenuModel menuModel = new MenuModel
                 {
@@ -55,7 +55,7 @@ namespace CanteenMenuInterface
         /// <param name="selectedMenuIdx"></param>
         public void DeleteMenu(int selectedMenuIdx)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("CanteenMenuDB")))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
             {
                 connection.Execute("dbo.MenuDeleteByID @MenuKey", new { MenuKey = selectedMenuIdx });
             }
@@ -69,7 +69,7 @@ namespace CanteenMenuInterface
         /// <param name="menuDescriptionInput"></param>
         public void EditMenu(int menuKey, string menuNameInput, string menuDescriptionInput)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("CanteenMenuDB")))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
             {
                 MenuModel menuModel = new MenuModel
                 {
@@ -92,7 +92,7 @@ namespace CanteenMenuInterface
         /// <returns></returns>
         public List<UserModel> GetUsers()
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("CanteenMenuDB")))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
             {
                 var output = connection.Query<UserModel>("dbo.UserViewAll").ToList();
 
@@ -105,7 +105,7 @@ namespace CanteenMenuInterface
         /// </summary>
         public void InsertUser(string firstName, string lastName, string email)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("CanteenMenuDB")))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
             {
                 UserModel userModel = new UserModel
                 {
@@ -125,7 +125,7 @@ namespace CanteenMenuInterface
         /// </summary>
         public void DeleteUser(int selectedUserKey)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("CanteenMenuDB")))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
             {
                 connection.Execute("dbo.UserDeleteByID @UserKey", new { UserKey = selectedUserKey });
             }
@@ -136,7 +136,7 @@ namespace CanteenMenuInterface
         /// </summary>
         public void EditUser(int userKey, string firstName, string lastName, string email)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("CanteenMenuDB")))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
             {
                 UserModel userModel = new UserModel
                 {
@@ -160,7 +160,7 @@ namespace CanteenMenuInterface
         /// <returns></returns>
         public List<DateMenuModel> GetDateMenus()
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("CanteenMenuDB")))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
             {
                 var output = connection.Query<DateMenuModel>("dbo.DateMenuViewAll").ToList();
 
@@ -175,7 +175,7 @@ namespace CanteenMenuInterface
         /// <param name="menuKey"></param>
         public void InsertDateMenu(DateTime date, int menuKey)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("CanteenMenuDB")))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
             {
                 DateMenuModel dateMenuModel = new DateMenuModel
                 {
@@ -194,9 +194,20 @@ namespace CanteenMenuInterface
         /// <param name="dateMenuKey"></param>
         public void DeleteDateMenu(int dateMenuKey)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("CanteenMenuDB")))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
             {
                 connection.Execute("dbo.DateMenuDeleteByID @DateMenuKey", new { DateMenuKey = dateMenuKey });
+            }
+        }
+
+        /// <summary>
+        /// Delete DateMenu With Date and MenuKey
+        /// </summary>
+        public void DeleteDateMenuByDateAndMenuKey(int menuKey, DateTime date)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
+            {
+                connection.Execute("dbo.DateMenuDeleteByDateAndMenuKey @MenuKey, @Date", new { MenuKey = menuKey, Date = date });
             }
         }
 
@@ -208,7 +219,7 @@ namespace CanteenMenuInterface
         /// <param name="menuKey"></param>
         public void EditDateMenu(int dateMenuKey ,DateTime date, int menuKey)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("CanteenMenuDB")))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
             {
                 DateMenuModel dateMenuModel = new DateMenuModel
                 {

@@ -4,12 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CanteenMenuInterface.Views"
+        xmlns:converters="clr-namespace:CanteenMenuInterface.Converters"
         xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
-        Title="ShellView" Height="800" Width="1800" Background="#fffcf9">
+        Title="ShellView" Height="1280" Width="1920" Background="#fffcf9">
+
+    <Window.Resources>
+        <converters:RoleConverter x:Key="RoleConverter"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
@@ -29,9 +36,12 @@
         <!-- MENUS -->
         <Grid Grid.Row="1" Grid.Column="1" Background="LightGray">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="140"></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
-                <ColumnDefinition Width="20"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="30"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
@@ -54,15 +64,16 @@
             <Label Grid.Row="2" Content="Description"/>
             <TextBox Grid.Row="2" Grid.Column="1" 
                      Text="{Binding MenuDescriptionInput,FallbackValue='Menu description'}" MinWidth="70" VerticalAlignment="Center" />
-            
-            <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+
+            <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal"  
+                        Visibility ="{Binding SelectedUserRoleKey, Converter={StaticResource RoleConverter}}">
                 <Button x:Name="AddMenu" Content="Add Menu" Margin="3" />
                 <Button x:Name="EditSelectedMenu" Content="Edit Menu" Margin="3" />
                 <Button x:Name="DeleteSelectedMenu" Content="Delete Menu" Margin="3" />
             </StackPanel>
 
 
-            <ListView Grid.Row="1" Grid.Column="3" Grid.RowSpan="6" MinHeight="85" MinWidth="100" MaxHeight="250"
+            <ListView Grid.Row="1" Grid.Column="5" Grid.RowSpan="6" MinHeight="85" MinWidth="100" MaxHeight="250"
                 ItemsSource="{Binding MenuList}"  SelectedIndex="{Binding SelectedMenuIdx}" SelectedItem="{Binding SelectedMenu}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -88,7 +99,7 @@
                 <ColumnDefinition Width="auto"></ColumnDefinition>
                 <ColumnDefinition Width="20" ></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
-                <ColumnDefinition Width="auto" MinWidth="150"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
                 <ColumnDefinition Width="150"></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -112,17 +123,25 @@
             <Label Grid.Row="1" Content="First Name"/>
             <Label Grid.Row="2" Content="Second Name"/>
             <Label Grid.Row="3" Content="Email"/>
+            <Label Grid.Row="4" Content="User Role"/>
 
             <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding UserFirstName}" Foreground="#FFB4B4B4" VerticalAlignment="Center" Height="18" MinWidth="100" Margin="3"/>
             <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding UserLastName}" Foreground="#FFB4B4B4" VerticalAlignment="Center" Height="18" MinWidth="100" Margin="3"/>
             <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding UserEmail}" Foreground="#FFB4B4B4" VerticalAlignment="Center" Height="18" MinWidth="100" Margin="3"/>
-            <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
+                <RadioButton Content="Operator" cal:Message.Attach="[Event Checked] = [Action UserRoleSelector('Operator')]"
+                             VerticalAlignment="Center" FlowDirection="RightToLeft" Margin="5 0"></RadioButton>
+                <RadioButton Content="User" IsChecked="True" cal:Message.Attach="[Event Checked] = [Action UserRoleSelector('User')]"
+                             VerticalAlignment="Center" FlowDirection="RightToLeft" Margin="5 0"></RadioButton>
+            </StackPanel>
+            
+            <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal">
                 <Button x:Name="AddUser" Content="Add User" Margin="3"/>
                 <Button x:Name="EditSelectedUser" Content="Edit User" Margin="3"/>
                 <Button x:Name="DeleteSelectedUser" Content="Delete User" Margin="3"/>
             </StackPanel>
 
-            <ListView Grid.Row="1" Grid.Column="3" Grid.RowSpan="8" MinHeight="85" MinWidth="200" MaxHeight="250"
+            <ListView Grid.Row="1" Grid.Column="3" Grid.RowSpan="8" MinHeight="85" MinWidth="200" MaxHeight="250" cal:Message.Attach="[Event MouseDoubleClick] = [Action FillUserForm($this)]"
                 ItemsSource="{Binding UserList}"  SelectedIndex="{Binding SelectedUserIdx}" SelectedItem="{Binding SelectedUser}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -134,6 +153,8 @@
                             <TextBlock Text="{Binding LastName}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/><TextBlock Text="   " Height="20"/>
                             <TextBlock Text="   " Height="20"/>
                             <TextBlock Text="{Binding Email}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
+                            <TextBlock Text="   " Height="20"/>
+                            <TextBlock Text="{Binding UserRoleKey}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -152,7 +173,7 @@
             <Label Grid.Row="2" Grid.Column="7" Content="{Binding SelectedUser.LastName}"/>
             <Label Grid.Row="3" Grid.Column="7" Content="{Binding SelectedUser.Email}"/>
             <Label Grid.Row="4" Grid.Column="7" Content="{Binding SelectedUser.UserKey}"/>
-            <Label Grid.Row="5" Grid.Column="7" Content="{Binding SelectedUser.UserTypeKey}"/>
+            <Label Grid.Row="5" Grid.Column="7" Content="{Binding SelectedUser.UserRoleKey}"/>
             <Label Grid.Row="6" Grid.Column="7" Content="{Binding SelectedUser.GroupKey}"/>
 
             <Label Grid.Row="1" Grid.Column="8" Content="Weekly order" FontWeight="Bold"/>
@@ -182,7 +203,7 @@
         </StackPanel>
         
         <!-- Operator Weekly Timetable -->
-        <Grid Grid.Row="3" Grid.Column="1" Background="LightGray">
+        <Grid Grid.Row="3" Grid.Column="1" Background="LightGray" Visibility ="{Binding SelectedUserRoleKey, Converter={StaticResource RoleConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120" ></ColumnDefinition>
                 <ColumnDefinition Width="120" ></ColumnDefinition>
@@ -422,6 +443,54 @@
             <Button x:Name="DateButton" Content="Date Button" Grid.Column="0" Grid.Row="3" />-->
 
         </Grid>
+
+        <Label Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="5" Content="ORDERS" Margin="0 10" FontSize="18" FontWeight="Bold"/>
+
+        <Grid Grid.Row="5" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Content="Selected Day" />
+            <DatePicker Grid.Row="0" Grid.Column="1" x:Name="SelectedDateOrder" Width="100" ></DatePicker>
+                <Button  Grid.Row="0" Grid.Column="2" x:Name="GetOrdersByDay" Content="Search by Day" Margin="5"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="Selected Week" />
+                <TextBox  Grid.Row="1" Grid.Column="1" x:Name="ChosenWeek" Width="100" Margin="5"></TextBox>
+                <Button  Grid.Row="1" Grid.Column="2" x:Name="GetOrdersByWeek" Content="Search by Week" Margin="5"/>
+                <Label  Grid.Row="2" Grid.Column="0" Content="Selected Month" />
+                <TextBox  Grid.Row="2" Grid.Column="1" x:Name="ChosenMonth" Width="100" Margin="5"></TextBox>
+                <Button  Grid.Row="2" Grid.Column="2" x:Name="GetOrdersByMonth" Content="Search by Month" Margin="5"/>
+
+            <ListView Grid.Row="3" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="5" MinHeight="200" MinWidth="200" Height="350" Margin="5"
+                ItemsSource="{Binding OrderModelJoinedList}"  SelectedIndex="{Binding SelectedOrderIdx}" SelectedItem="{Binding SelectedOrder}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Date}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18"/>
+                            <TextBlock Text="   " Height="20"/>
+                            <TextBlock Text="{Binding FirstName}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
+                            <TextBlock Text="   " Height="20"/>
+                            <TextBlock Text="{Binding LastName}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
+                            <TextBlock Text="   " Height="20"/>
+                            <TextBlock Text="{Binding MenuName}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
+                            <TextBlock Text="   " Height="20"/>
+                            <TextBlock Text="{Binding OrderStatusName}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+    
+        
     </Grid>
 
    

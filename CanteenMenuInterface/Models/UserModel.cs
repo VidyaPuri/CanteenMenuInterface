@@ -12,7 +12,7 @@ namespace CanteenMenuInterface.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public int UserTypeKey { get; set; }
+        public int UserRoleKey { get; set; }
         public int GroupKey { get; set; }
     }
 }

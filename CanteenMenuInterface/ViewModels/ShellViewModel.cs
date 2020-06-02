@@ -23,15 +23,6 @@ namespace CanteenMenuInterface.ViewModels
             FillTheList();
             CurrentDate = DateTime.Today;
             DateChanged();
-
-            //CurrentWeek = DateHelper.GetCurrentWeek();
-            //CurrentDaysDate = DateHelper.GetThisWeekDays();
-            //MondayDate = DateHelper.GetThisWeekDays()[0];
-            //TuesdayDate = DateHelper.GetThisWeekDays()[1];
-            //WednesdayDate = DateHelper.GetThisWeekDays()[2];
-            //ThursdayDate = DateHelper.GetThisWeekDays()[3];
-            //FridayDate = DateHelper.GetThisWeekDays()[4];
-
             UpdateWeeklyMenuTable();
         }
 
@@ -164,6 +155,8 @@ namespace CanteenMenuInterface.ViewModels
         private string _UserLastName;
         private string _UserEmail;
         private UserModel _SelectedUser;
+        private int _UserRoleKey;
+        private int _SelectedUserRoleKey;
 
         /// <summary>
         /// User List Properties
@@ -207,7 +200,30 @@ namespace CanteenMenuInterface.ViewModels
         public UserModel SelectedUser
         {
             get { return _SelectedUser; }
-            set => Set(ref _SelectedUser, value);
+            set
+            {
+                _SelectedUser = value;
+                SelectedUserRoleKey = SelectedUser.UserRoleKey;
+                NotifyOfPropertyChange(() => SelectedUser);
+            }
+        }
+
+        /// <summary>
+        /// Selected User Role Key Init
+        /// </summary>
+        public int SelectedUserRoleKey
+        {
+            get { return _SelectedUserRoleKey; }
+            set => Set(ref _SelectedUserRoleKey, value);
+        }
+
+        /// <summary>
+        /// User Role Key Init
+        /// </summary>
+        public int UserRoleKey
+        {
+            get { return _UserRoleKey; }
+            set => Set(ref _UserRoleKey, value);
         }
 
         #endregion
@@ -227,7 +243,7 @@ namespace CanteenMenuInterface.ViewModels
         /// </summary>
         public void AddUser()
         {
-            db.InsertUser(UserFirstName, UserLastName, UserEmail);
+            db.InsertUser(UserFirstName, UserLastName, UserEmail, UserRoleKey);
             ShowUsers();
         }
 
@@ -236,8 +252,8 @@ namespace CanteenMenuInterface.ViewModels
         /// </summary>
         public void EditSelectedUser()
         {
-            if(SelectedUser != null)
-                db.EditUser(SelectedUser.UserKey , UserFirstName, UserLastName, UserEmail);
+            if (SelectedUser != null)
+                db.EditUser(SelectedUser.UserKey, UserFirstName, UserLastName, UserEmail, UserRoleKey);
             ShowUsers();
         }
 
@@ -249,6 +265,37 @@ namespace CanteenMenuInterface.ViewModels
             if (SelectedUser != null)
                 db.DeleteUser(SelectedUser.UserKey);
             ShowUsers();
+        }
+
+        /// <summary>
+        /// Sets the user type key
+        /// </summary>
+        /// <param name="type"></param>
+        public void UserRoleSelector(string type)
+        {
+            switch (type)
+            {
+                case "Operator":
+                    UserRoleKey = 1;
+                    break;
+                case "User":
+                    UserRoleKey = 2;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Fills the User form
+        /// </summary>
+        /// <param name="source"></param>
+        public void FillUserForm(object source)
+        {
+            if (!(source is UserModel menuModel))
+                return;
+
+            UserFirstName = menuModel.FirstName;
+            UserLastName = menuModel.LastName;
+            UserEmail = menuModel.Email;
         }
 
         #endregion
@@ -344,7 +391,7 @@ namespace CanteenMenuInterface.ViewModels
             if (!(source is MenuModel menuModel))
                 return;
 
-            switch(day)
+            switch (day)
             {
                 case "Monday":
                     SelectedItemMonday = menuModel;
@@ -373,40 +420,40 @@ namespace CanteenMenuInterface.ViewModels
         /// <param name="day"></param>
         public void GetSelectedDateMenu(MenuModel menuModel, string day)
         {
-            switch(day)
+            switch (day)
             {
                 case "Monday":
                     foreach (var item in MondayDateMenu)
                     {
-                        if(item.MenuKey == menuModel.MenuKey)
+                        if (item.MenuKey == menuModel.MenuKey)
                             SelectedDateMenuItemMonday = item;
                     }
                     break;
                 case "Tuesday":
                     foreach (var item in TuesdayDateMenu)
                     {
-                        if(item.MenuKey == menuModel.MenuKey)
+                        if (item.MenuKey == menuModel.MenuKey)
                             SelectedDateMenuItemTuesday = item;
                     }
                     break;
                 case "Wednesday":
                     foreach (var item in WednesdayDateMenu)
                     {
-                        if (item.MenuKey == menuModel.MenuKey) 
+                        if (item.MenuKey == menuModel.MenuKey)
                             SelectedDateMenuItemWednesday = item;
                     }
                     break;
                 case "Thursday":
                     foreach (var item in ThursdayDateMenu)
                     {
-                        if(item.MenuKey == menuModel.MenuKey)
+                        if (item.MenuKey == menuModel.MenuKey)
                             SelectedDateMenuItemThursday = item;
                     }
                     break;
                 case "Friday":
                     foreach (var item in FridayDateMenu)
                     {
-                        if(item.MenuKey == menuModel.MenuKey)
+                        if (item.MenuKey == menuModel.MenuKey)
                             SelectedDateMenuItemFriday = item;
                     }
                     break;
@@ -611,7 +658,7 @@ namespace CanteenMenuInterface.ViewModels
         /// Removes deselected menus from the list 
         /// </summary>
         public void MenuDeselector(object source, string day)
-         {
+        {
             if (!(source is MenuModel menuModel))
                 return;
 
@@ -638,6 +685,107 @@ namespace CanteenMenuInterface.ViewModels
             UpdateWeeklyMenuTable();
         }
 
+
+        #endregion
+
+        #region Orders
+
+        #region Order Properties
+
+        private List<OrderModel> _OrderModelList;
+        private DateTime _SelectedDateOrder = DateTime.Today;
+        private List<OrderModelJoined> _OrderModelJoinedList;
+        private int _ChosenWeek; 
+        private int _ChosenMonth;
+
+        public List<OrderModel> OrderModelList
+        {
+            get { return _OrderModelList; }
+            set => Set(ref _OrderModelList, value);
+        }
+
+        public DateTime SelectedDateOrder
+        {
+            get { return _SelectedDateOrder; }
+            set => Set(ref _SelectedDateOrder, value);
+        }
+
+        public List<OrderModelJoined> OrderModelJoinedList
+        {
+            get { return _OrderModelJoinedList; }
+            set => Set(ref _OrderModelJoinedList, value);
+        }
+        public int ChosenWeek
+        {
+            get { return _ChosenWeek; }
+            set => Set(ref _ChosenWeek, value);
+        }
+
+        public int ChosenMonth
+        {
+            get { return _ChosenMonth; }
+            set => Set(ref _ChosenMonth, value);
+        }
+
+
+        #endregion
+
+        /// <summary>
+        /// Submit Order
+        /// </summary>
+        public void SubmitOrder()
+        {
+            try
+            {
+                db.InsertOrder(SelectedDateMenuItemMonday.DateMenuKey, SelectedUser.UserKey, 1, "");
+                db.InsertOrder(SelectedDateMenuItemTuesday.DateMenuKey, SelectedUser.UserKey, 1, "");
+                db.InsertOrder(SelectedDateMenuItemWednesday.DateMenuKey, SelectedUser.UserKey, 1, "");
+                db.InsertOrder(SelectedDateMenuItemThursday.DateMenuKey, SelectedUser.UserKey, 1, "");
+                db.InsertOrder(SelectedDateMenuItemFriday.DateMenuKey, SelectedUser.UserKey, 1, "");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+        }
+
+        /// <summary>
+        /// Searching Orders
+        /// </summary>
+        public void OrderSearchButton()
+        {
+            OrderModelList = db.GetOrders();
+        }
+
+        /// <summary>
+        /// Gets the selected day Orders
+        /// </summary>
+        public void GetOrdersByDay()
+        {
+            OrderModelJoinedList =  db.GetOrdersByDay(SelectedDateOrder);
+        }
+
+        /// <summary>
+        /// Gets the Orders by selected week
+        /// </summary>
+        public void GetOrdersByWeek()
+        {
+            DateTime dt1 = DateHelper.GetDateFromWeekNumberAndDayOfWeek(ChosenWeek, 0);
+            DateTime dt2 = dt1.AddDays(6);
+            OrderModelJoinedList = db.GetOrdersByWeek(dt1, dt2);
+        }
+
+        /// <summary>
+        /// Gets The ORders by selected month
+        /// </summary>
+        public void GetOrdersByMonth()
+        {
+            var firstDayOfMonth = new DateTime(2020, ChosenMonth, 1);
+            var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+            DateTime dt1 = firstDayOfMonth;
+            DateTime dt2 = lastDayOfMonth;
+            OrderModelJoinedList = db.GetOrdersByWeek(dt1, dt2);
+        }
 
         #endregion
 
@@ -739,6 +887,8 @@ namespace CanteenMenuInterface.ViewModels
         }
 
         #endregion
+
+
 
     }
 }

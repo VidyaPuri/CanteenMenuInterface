@@ -103,7 +103,7 @@ namespace CanteenMenuInterface
         /// <summary>
         /// Adds a Menu to DB
         /// </summary>
-        public void InsertUser(string firstName, string lastName, string email)
+        public void InsertUser(string firstName, string lastName, string email, int userRoleKey)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
             {
@@ -112,10 +112,11 @@ namespace CanteenMenuInterface
                     UserKey = 0,
                     FirstName = firstName,
                     LastName = lastName,
-                    Email = email
+                    Email = email,
+                    UserRoleKey = userRoleKey
                 };
 
-                connection.Execute("dbo.UserAddOrEdit @UserKey, @FirstName, @LastName, @Email", userModel);
+                connection.Execute("dbo.UserAddOrEdit @UserKey, @FirstName, @LastName, @Email, @UserRoleKey", userModel);
 
             }
         }
@@ -134,7 +135,7 @@ namespace CanteenMenuInterface
         /// <summary>
         /// Edit selected menu
         /// </summary>
-        public void EditUser(int userKey, string firstName, string lastName, string email)
+        public void EditUser(int userKey, string firstName, string lastName, string email, int userRoleKey)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
             {
@@ -143,10 +144,11 @@ namespace CanteenMenuInterface
                     UserKey = userKey,
                     FirstName = firstName,
                     LastName = lastName,
-                    Email = email
+                    Email = email,
+                    UserRoleKey = userRoleKey
                 };
 
-                connection.Execute("dbo.UserAddOrEdit @UserKey, @FirstName, @LastName, @Email", userModel);
+                connection.Execute("dbo.UserAddOrEdit @UserKey, @FirstName, @LastName, @Email, @UserRoleKey", userModel);
             }
         }
 
@@ -261,6 +263,98 @@ namespace CanteenMenuInterface
                 connection.Execute("dbo.DateMenuAddOrEdit @DateMenuKey, @Date, @MenuKey", dateMenuModel);
             }
         }
+
+        #endregion
+
+        #region Order Methods
+
+        /// <summary>
+        /// Return the list of all Orders in DB
+        /// </summary>
+        /// <returns></returns>
+        public List<OrderModel> GetOrders()
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
+            {
+                var output = connection.Query<OrderModel>("dbo.OrderViewAll").ToList();
+
+                return output;
+            }
+        }
+
+        /// <summary>
+        /// Return the list of all Orders at selected day
+        /// </summary>
+        /// <returns></returns>
+        public List<OrderModelJoined> GetOrdersByDay(DateTime date)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
+            {
+                var output = connection.Query<OrderModelJoined>("dbo.OrderViewByDay @Date", new {Date = date }).ToList();
+
+                return output;
+            }
+        }
+
+        /// <summary>
+        /// Return the list of all Orders between two days (one week)
+        /// </summary>
+        /// <returns></returns>
+        public List<OrderModelJoined> GetOrdersByWeek(DateTime date1, DateTime date2)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
+            {
+                var output = connection.Query<OrderModelJoined>("dbo.OrderViewByWeek @Date1, @Date2", new { Date1 = date1, Date2 = date2 }).ToList();
+
+                return output;
+            }
+        }
+
+        /// <summary>
+        /// Inserts Order to DB
+        /// </summary> 
+        /// <param name="date"></param>
+        /// <param name="menuKey"></param>
+        public void InsertOrder(int dateMenuKey, int userKey, int orderStatusKey, string comment)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
+            {
+                OrderModel orderModel = new OrderModel
+                {
+                    OrderKey = 0,
+                    DateMenuKey = dateMenuKey,
+                    UserKey = userKey,
+                    OrderStatusKey = orderStatusKey,
+                    Comment = comment
+                };
+
+                connection.Execute("dbo.OrderAddOrEdit @OrderKey, @DateMenuKey, @UserKey, @OrderStatusKey, @Comment", orderModel);
+            }
+        }
+
+        /// <summary>
+        /// Edits Order at Order ID 
+        /// </summary> 
+        /// <param name="date"></param>
+        /// <param name="menuKey"></param>
+        public void EditOrder(int orderKey, int dateMenuKey, int userKey, int orderStatusKey, string comment)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
+            {
+                OrderModel orderModel = new OrderModel
+                {
+                    OrderKey = orderKey,
+                    DateMenuKey = dateMenuKey,
+                    UserKey = userKey,
+                    OrderStatusKey = orderStatusKey,
+                    Comment = comment
+                };
+
+                connection.Execute("dbo.OrderAddOrEdit @OrderKey, @DateMenuKey, @UserKey, @OrderStatusKey, @Comment", orderModel);
+            }
+        }
+
+
 
         #endregion
 

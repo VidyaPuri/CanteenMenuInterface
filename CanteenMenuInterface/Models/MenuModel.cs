@@ -11,5 +11,6 @@ namespace CanteenMenuInterface.Models
         public int MenuKey { get; set; }
         public string MenuName { get; set; }
         public string Description { get; set; }
+
     }
 }

@@ -12,26 +12,31 @@ namespace CanteenMenuInterface.ViewModels
 {
     public class ShellViewModel : Screen
     {
+        DataAccess db = new DataAccess();
+
+        #region Constructor
+
         public ShellViewModel()
         {
             ShowMenus();
             ShowUsers();
             FillTheList();
-
             CurrentDate = DateTime.Today;
-            CurrentWeek = DateHelper.GetCurrentWeek();
-            CurrentDaysDate = DateHelper.GetThisWeekDays();
-            MondayDate = DateHelper.GetThisWeekDays()[0];
-            TuesdayDate = DateHelper.GetThisWeekDays()[1];
-            WednesdayDate = DateHelper.GetThisWeekDays()[2];
-            ThursdayDate = DateHelper.GetThisWeekDays()[3];
-            FridayDate = DateHelper.GetThisWeekDays()[4];
+            DateChanged();
+
+            //CurrentWeek = DateHelper.GetCurrentWeek();
+            //CurrentDaysDate = DateHelper.GetThisWeekDays();
+            //MondayDate = DateHelper.GetThisWeekDays()[0];
+            //TuesdayDate = DateHelper.GetThisWeekDays()[1];
+            //WednesdayDate = DateHelper.GetThisWeekDays()[2];
+            //ThursdayDate = DateHelper.GetThisWeekDays()[3];
+            //FridayDate = DateHelper.GetThisWeekDays()[4];
 
             UpdateWeeklyMenuTable();
-
         }
 
-        DataAccess db = new DataAccess();
+        #endregion
+
 
         #region MENUS
 
@@ -250,7 +255,169 @@ namespace CanteenMenuInterface.ViewModels
 
         #endregion
 
+        #region USER selected MENUs
+
+        #region Selected Item MenuModel
+
+        private MenuModel _SelectedItemMonday;
+        private MenuModel _SelectedItemTuesday;
+        private MenuModel _SelectedItemWednesday;
+        private MenuModel _SelectedItemThursday;
+        private MenuModel _SelectedItemFriday;
+
+
+        public MenuModel SelectedItemMonday
+        {
+            get { return _SelectedItemMonday; }
+            set => Set(ref _SelectedItemMonday, value);
+        }
+
+        public MenuModel SelectedItemTuesday
+        {
+            get { return _SelectedItemTuesday; }
+            set => Set(ref _SelectedItemTuesday, value);
+        }
+
+        public MenuModel SelectedItemWednesday
+        {
+            get { return _SelectedItemWednesday; }
+            set => Set(ref _SelectedItemWednesday, value);
+        }
+
+        public MenuModel SelectedItemThursday
+        {
+            get { return _SelectedItemThursday; }
+            set => Set(ref _SelectedItemThursday, value);
+        }
+
+        public MenuModel SelectedItemFriday
+        {
+            get { return _SelectedItemFriday; }
+            set => Set(ref _SelectedItemFriday, value);
+        }
+
+        #endregion
+
+        #region Selected Item DateMenuModel
+
+        private DateMenuModel _SelectedDateMenuItemMonday;
+        private DateMenuModel _SelectedDateMenuItemTuesday;
+        private DateMenuModel _SelectedDateMenuItemWednesday;
+        private DateMenuModel _SelectedDateMenuItemThursday;
+        private DateMenuModel _SelectedDateMenuItemFriday;
+
+
+        public DateMenuModel SelectedDateMenuItemMonday
+        {
+            get { return _SelectedDateMenuItemMonday; }
+            set => Set(ref _SelectedDateMenuItemMonday, value);
+        }
+
+        public DateMenuModel SelectedDateMenuItemTuesday
+        {
+            get { return _SelectedDateMenuItemTuesday; }
+            set => Set(ref _SelectedDateMenuItemTuesday, value);
+        }
+
+        public DateMenuModel SelectedDateMenuItemWednesday
+        {
+            get { return _SelectedDateMenuItemWednesday; }
+            set => Set(ref _SelectedDateMenuItemWednesday, value);
+        }
+
+        public DateMenuModel SelectedDateMenuItemThursday
+        {
+            get { return _SelectedDateMenuItemThursday; }
+            set => Set(ref _SelectedDateMenuItemThursday, value);
+        }
+
+        public DateMenuModel SelectedDateMenuItemFriday
+        {
+            get { return _SelectedDateMenuItemFriday; }
+            set => Set(ref _SelectedDateMenuItemFriday, value);
+        }
+
+        #endregion
+
+        public void UserSelectMenu(object source, string day)
+        {
+            if (!(source is MenuModel menuModel))
+                return;
+
+            switch(day)
+            {
+                case "Monday":
+                    SelectedItemMonday = menuModel;
+                    break;
+                case "Tuesday":
+                    SelectedItemTuesday = menuModel;
+                    break;
+                case "Wednesday":
+                    SelectedItemWednesday = menuModel;
+                    break;
+                case "Thursday":
+                    SelectedItemThursday = menuModel;
+                    break;
+                case "Friday":
+                    SelectedItemFriday = menuModel;
+                    break;
+            }
+
+            GetSelectedDateMenu(menuModel, day);
+        }
+
+        /// <summary>
+        /// Gets selected DateMenu
+        /// </summary>
+        /// <param name="menuModel"></param>
+        /// <param name="day"></param>
+        public void GetSelectedDateMenu(MenuModel menuModel, string day)
+        {
+            switch(day)
+            {
+                case "Monday":
+                    foreach (var item in MondayDateMenu)
+                    {
+                        if(item.MenuKey == menuModel.MenuKey)
+                            SelectedDateMenuItemMonday = item;
+                    }
+                    break;
+                case "Tuesday":
+                    foreach (var item in TuesdayDateMenu)
+                    {
+                        if(item.MenuKey == menuModel.MenuKey)
+                            SelectedDateMenuItemTuesday = item;
+                    }
+                    break;
+                case "Wednesday":
+                    foreach (var item in WednesdayDateMenu)
+                    {
+                        if (item.MenuKey == menuModel.MenuKey) 
+                            SelectedDateMenuItemWednesday = item;
+                    }
+                    break;
+                case "Thursday":
+                    foreach (var item in ThursdayDateMenu)
+                    {
+                        if(item.MenuKey == menuModel.MenuKey)
+                            SelectedDateMenuItemThursday = item;
+                    }
+                    break;
+                case "Friday":
+                    foreach (var item in FridayDateMenu)
+                    {
+                        if(item.MenuKey == menuModel.MenuKey)
+                            SelectedDateMenuItemFriday = item;
+                    }
+                    break;
+            }
+        }
+
+        #endregion
+
         #region Menu Selection 
+
+        #region Weekly Menu Properties
 
         private BindableCollection<MenuModel> _MondayMenu = new BindableCollection<MenuModel>();
         private BindableCollection<MenuModel> _TuesdayMenu = new BindableCollection<MenuModel>();
@@ -288,6 +455,46 @@ namespace CanteenMenuInterface.ViewModels
             set => Set(ref _FridayMenu, value);
         }
 
+        #endregion
+
+        #region Weekly DateMenu Properties
+        private BindableCollection<DateMenuModel> _MondayDateMenu = new BindableCollection<DateMenuModel>();
+        private BindableCollection<DateMenuModel> _TuesdayDateMenu = new BindableCollection<DateMenuModel>();
+        private BindableCollection<DateMenuModel> _WednesdayDateMenu = new BindableCollection<DateMenuModel>();
+        private BindableCollection<DateMenuModel> _ThursdayDateMenu = new BindableCollection<DateMenuModel>();
+        private BindableCollection<DateMenuModel> _FridayDateMenu = new BindableCollection<DateMenuModel>();
+
+        public BindableCollection<DateMenuModel> MondayDateMenu
+        {
+            get { return _MondayDateMenu; }
+            set => Set(ref _MondayDateMenu, value);
+        }
+
+        public BindableCollection<DateMenuModel> TuesdayDateMenu
+        {
+            get { return _TuesdayDateMenu; }
+            set => Set(ref _TuesdayDateMenu, value);
+        }
+
+        public BindableCollection<DateMenuModel> WednesdayDateMenu
+        {
+            get { return _WednesdayDateMenu; }
+            set => Set(ref _WednesdayDateMenu, value);
+        }
+
+        public BindableCollection<DateMenuModel> ThursdayDateMenu
+        {
+            get { return _ThursdayDateMenu; }
+            set => Set(ref _ThursdayDateMenu, value);
+        }
+
+        public BindableCollection<DateMenuModel> FridayDateMenu
+        {
+            get { return _FridayDateMenu; }
+            set => Set(ref _FridayDateMenu, value);
+        }
+
+        #endregion
 
         /// <summary>
         /// Adds selected menus to corespondend menu list
@@ -304,22 +511,18 @@ namespace CanteenMenuInterface.ViewModels
                     db.InsertDateMenu(MondayDate, menuModel.MenuKey);
                     break;
                 case "Tuesday":
-                    TuesdayMenu.Add(menuModel);
                     db.InsertDateMenu(TuesdayDate, menuModel.MenuKey);
 
                     break;
                 case "Wednesday":
-                    WednesdayMenu.Add(menuModel);
                     db.InsertDateMenu(WednesdayDate, menuModel.MenuKey);
 
                     break;
                 case "Thursday":
-                    ThursdayMenu.Add(menuModel);
                     db.InsertDateMenu(ThursdayDate, menuModel.MenuKey);
 
                     break;
                 case "Friday":
-                    FridayMenu.Add(menuModel);
                     db.InsertDateMenu(FridayDate, menuModel.MenuKey);
                     break;
             }
@@ -331,14 +534,14 @@ namespace CanteenMenuInterface.ViewModels
         /// </summary>
         private void UpdateWeeklyMenuTable()
         {
-            MondayMenu.Clear();
-            TuesdayMenu.Clear();
-            WednesdayMenu.Clear();
-            ThursdayMenu.Clear();
-            FridayMenu.Clear();
+            ClearLists();
+
             for (int i = 0; i < CurrentDaysDate.Count(); i++)
             {
-                var menuList = db.GetDateMenuByDate(CurrentDaysDate[i]);
+                var menuList = db.GetDateMenuByDateReturnMenus(CurrentDaysDate[i]);
+                var dateMenuList = db.GetDateMenuByDate(CurrentDaysDate[i]);
+
+                // Loop throughs Menu List 
                 foreach (var item in menuList)
                 {
                     switch (CurrentDaysDate[i].DayOfWeek.ToString())
@@ -360,7 +563,48 @@ namespace CanteenMenuInterface.ViewModels
                             break;
                     }
                 }
+
+                // Loop through Date Menu List 
+                foreach (var item in dateMenuList)
+                {
+                    switch (CurrentDaysDate[i].DayOfWeek.ToString())
+                    {
+                        case "Monday":
+                            MondayDateMenu.Add(item);
+                            break;
+                        case "Tuesday":
+                            TuesdayDateMenu.Add(item);
+                            break;
+                        case "Wednesday":
+                            WednesdayDateMenu.Add(item);
+                            break;
+                        case "Thursday":
+                            ThursdayDateMenu.Add(item);
+                            break;
+                        case "Friday":
+                            FridayDateMenu.Add(item);
+                            break;
+                    }
+                }
             }
+        }
+
+        /// <summary>
+        /// Clears DateMenu and Menu Lists
+        /// </summary>
+        private void ClearLists()
+        {
+            MondayMenu.Clear();
+            TuesdayMenu.Clear();
+            WednesdayMenu.Clear();
+            ThursdayMenu.Clear();
+            FridayMenu.Clear();
+
+            MondayDateMenu.Clear();
+            TuesdayDateMenu.Clear();
+            WednesdayDateMenu.Clear();
+            ThursdayDateMenu.Clear();
+            FridayDateMenu.Clear();
         }
 
         /// <summary>
@@ -374,23 +618,18 @@ namespace CanteenMenuInterface.ViewModels
             switch (day)
             {
                 case "Monday":
-                    MondayMenu.Remove(menuModel);
                     db.DeleteDateMenuByDateAndMenuKey(menuModel.MenuKey, MondayDate);
                     break;
                 case "Tuesday":
-                    TuesdayMenu.Remove(menuModel);
                     db.DeleteDateMenuByDateAndMenuKey(menuModel.MenuKey, TuesdayDate);
                     break;
                 case "Wednesday":
-                    WednesdayMenu.Remove(menuModel);
                     db.DeleteDateMenuByDateAndMenuKey(menuModel.MenuKey, WednesdayDate);
                     break;
                 case "Thursday":
-                    ThursdayMenu.Remove(menuModel);
                     db.DeleteDateMenuByDateAndMenuKey(menuModel.MenuKey, ThursdayDate);
                     break;
                 case "Friday":
-                    FridayMenu.Remove(menuModel);
                     db.DeleteDateMenuByDateAndMenuKey(menuModel.MenuKey, FridayDate);
                     break;
             }
@@ -463,7 +702,6 @@ namespace CanteenMenuInterface.ViewModels
             set => Set(ref _CurrentDaysDate, value);
         }
 
-
         #endregion
 
         /// <summary>
@@ -472,7 +710,7 @@ namespace CanteenMenuInterface.ViewModels
         public void PreviousWeek()
         {
             CurrentDate = CurrentDate.AddDays(-7);
-            ChangedDate();
+            DateChanged();
             UpdateWeeklyMenuTable();
         }
 
@@ -482,14 +720,14 @@ namespace CanteenMenuInterface.ViewModels
         public void NextWeek()
         {
             CurrentDate = CurrentDate.AddDays(7);
-            ChangedDate();
+            DateChanged();
             UpdateWeeklyMenuTable();
         }
 
         /// <summary>
         /// Changed Date Method Call
         /// </summary>
-        private void ChangedDate()
+        private void DateChanged()
         {
             CurrentWeek = DateHelper.GetChangedWeek(CurrentDate);
             CurrentDaysDate = DateHelper.GetSelectedWeekDays(CurrentDate);
@@ -501,8 +739,6 @@ namespace CanteenMenuInterface.ViewModels
         }
 
         #endregion
-
-
 
     }
 }

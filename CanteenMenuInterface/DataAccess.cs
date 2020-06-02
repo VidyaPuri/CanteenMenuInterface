@@ -169,11 +169,11 @@ namespace CanteenMenuInterface
         }
 
         /// <summary>
-        /// Return DateMenus at specified date
+        /// Return Menus at specified date
         /// </summary>
         /// <param name="dateTime"></param>
         /// <returns></returns>
-        public List<MenuModel> GetDateMenuByDate(DateTime dateTime)
+        public List<MenuModel> GetDateMenuByDateReturnMenus(DateTime dateTime)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
             {
@@ -184,8 +184,23 @@ namespace CanteenMenuInterface
         }
 
         /// <summary>
-        /// Inserts Date Menu to DB
+        /// Return DateMenus at specified date
         /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public List<DateMenuModel> GetDateMenuByDate(DateTime dateTime)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
+            {
+                var output = connection.Query<DateMenuModel>("dbo.DateMenuGetByDate @Date", new { Date = dateTime }).ToList();
+
+                return output;
+            }
+        }
+
+        /// <summary>
+        /// Inserts Date Menu to DB
+        /// </summary> 
         /// <param name="date"></param>
         /// <param name="menuKey"></param>
         public void InsertDateMenu(DateTime date, int menuKey)

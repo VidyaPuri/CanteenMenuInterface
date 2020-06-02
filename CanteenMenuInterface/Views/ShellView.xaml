@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CanteenMenuInterface.Views"
         xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
-        Title="ShellView" Height="600" Width="1440" Background="#fffcf9">
+        Title="ShellView" Height="800" Width="1800" Background="#fffcf9">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5"></RowDefinition>
@@ -43,10 +43,11 @@
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="20"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0" Content="Menu" FontSize="18" ></Label>
+            <Label Grid.Row="0" Grid.Column="0" Content="Menu" FontSize="18" FontWeight="Bold" />
             <Label Grid.Row="1" Grid.Column="0" Content="Name"/>
             <TextBox Grid.Row="1" Grid.Column="1" 
                      Text="{Binding MenuNameInput, FallbackValue='Menu name'}" MinWidth="70" VerticalAlignment="Center" />
@@ -61,7 +62,7 @@
             </StackPanel>
 
 
-            <ListView Grid.Row="1" Grid.Column="3" Grid.RowSpan="7" MinHeight="85" MinWidth="100" 
+            <ListView Grid.Row="1" Grid.Column="3" Grid.RowSpan="6" MinHeight="85" MinWidth="100" MaxHeight="250"
                 ItemsSource="{Binding MenuList}"  SelectedIndex="{Binding SelectedMenuIdx}" SelectedItem="{Binding SelectedMenu}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -87,8 +88,10 @@
                 <ColumnDefinition Width="auto"></ColumnDefinition>
                 <ColumnDefinition Width="20" ></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="auto" MinWidth="150"></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
-
+                <ColumnDefinition Width="auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"></RowDefinition>
@@ -98,9 +101,13 @@
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="20"></RowDefinition>
+
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Content="Users" FontSize="18" />
+            <Label Grid.Row="0" Content="Users" FontSize="18" FontWeight="Bold"/>
             
             <Label Grid.Row="1" Content="First Name"/>
             <Label Grid.Row="2" Content="Second Name"/>
@@ -115,7 +122,7 @@
                 <Button x:Name="DeleteSelectedUser" Content="Delete User" Margin="3"/>
             </StackPanel>
 
-            <ListView Grid.Row="1" Grid.Column="3" Grid.RowSpan="5" MinHeight="85" MinWidth="200"
+            <ListView Grid.Row="1" Grid.Column="3" Grid.RowSpan="8" MinHeight="85" MinWidth="200" MaxHeight="250"
                 ItemsSource="{Binding UserList}"  SelectedIndex="{Binding SelectedUserIdx}" SelectedItem="{Binding SelectedUser}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -133,7 +140,7 @@
             </ListView>
 
             <!-- SELECTED USER -->
-            <Label Grid.Row="0" Grid.Column="6" Content="Selected User" FontSize="18" />
+            <Label Grid.Row="0" Grid.Column="6" Content="Selected User" FontSize="18" FontWeight="Bold"/>
             <Label Grid.Row="1" Grid.Column="6" Content="First Name"/>
             <Label Grid.Row="2" Grid.Column="6" Content="Second Name"/>
             <Label Grid.Row="3" Grid.Column="6" Content="Email"/>
@@ -147,13 +154,29 @@
             <Label Grid.Row="4" Grid.Column="7" Content="{Binding SelectedUser.UserKey}"/>
             <Label Grid.Row="5" Grid.Column="7" Content="{Binding SelectedUser.UserTypeKey}"/>
             <Label Grid.Row="6" Grid.Column="7" Content="{Binding SelectedUser.GroupKey}"/>
+
+            <Label Grid.Row="1" Grid.Column="8" Content="Weekly order" FontWeight="Bold"/>
+            <Label Grid.Row="2" Grid.Column="8" Content="{Binding SelectedItemMonday.MenuName}"/>
+            <Label Grid.Row="3" Grid.Column="8" Content="{Binding SelectedItemTuesday.MenuName}"/>
+            <Label Grid.Row="4" Grid.Column="8" Content="{Binding SelectedItemWednesday.MenuName}"/>
+            <Label Grid.Row="5" Grid.Column="8" Content="{Binding SelectedItemThursday.MenuName}"/>
+            <Label Grid.Row="6" Grid.Column="8" Content="{Binding SelectedItemFriday.MenuName}"/>
+
+            <Label Grid.Row="1" Grid.Column="9" Content="Date Menu Key" />
+            <Label Grid.Row="2" Grid.Column="9" Content="{Binding SelectedDateMenuItemMonday.DateMenuKey}"/>
+            <Label Grid.Row="3" Grid.Column="9" Content="{Binding SelectedDateMenuItemTuesday.DateMenuKey}"/>
+            <Label Grid.Row="4" Grid.Column="9" Content="{Binding SelectedDateMenuItemWednesday.DateMenuKey}"/>
+            <Label Grid.Row="5" Grid.Column="9" Content="{Binding SelectedDateMenuItemThursday.DateMenuKey}"/>
+            <Label Grid.Row="6" Grid.Column="9" Content="{Binding SelectedDateMenuItemFriday.DateMenuKey}"/>
+
+            <Button Grid.Row="7" Grid.Column="6" x:Name="SubmitOrder" Content="Submit Order" />
         </Grid>
         
         <!-- Weekly Menus -->
-        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Margin="0 10">
-            <Label  Content="OPERATOR PANEL" />
-            <Label Content="Week #"/>
-            <Label  Content="{Binding CurrentWeek}"/>
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Margin="0 10" >
+            <Label  Content="OPERATOR PANEL" FontSize="18" FontWeight="Bold"/>
+            <Label Content="Week #" VerticalAlignment="Center"/>
+            <Label  Content="{Binding CurrentWeek}" VerticalAlignment="Center"/>
             <Button x:Name="PreviousWeek" Content="Previous Week" Margin="10 0"/>
             <Button x:Name="NextWeek" Content="Next Week" Margin="10 0"/>
         </StackPanel>
@@ -210,70 +233,6 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-
-                <!--<ListBox ItemsSource="{Binding MenuList}" SelectedItem="{Binding SelectedItem}">
-                    <ListBox.ItemContainerStyle>
-                         Style to get rid of the selection visual 
-                        <Style TargetType="{x:Type ListBoxItem}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                        <ContentPresenter />
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <RadioButton Content="{Binding MenuName}" GroupName="Properties">
-                                 Binding IsChecked to IsSelected requires no support code 
-                                <RadioButton.IsChecked>
-                                    <Binding Path="IsSelected"
-                             RelativeSource="{RelativeSource AncestorType=ListBoxItem}"
-                             Mode="TwoWay" />
-                                </RadioButton.IsChecked>
-                            </RadioButton>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-                <StackPanel >
-                    <ComboBox ItemsSource="{Binding MenuList}" Width="100">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" >
-                                    <TextBlock Text="{Binding MenuName}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                </StackPanel>
-                <DataGrid x:Name="SelectedMenusList">
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="Monday" >
-                            <DataGridTemplateColumn.CellTemplate >
-                                <DataTemplate >
-                                    <TextBlock Text="{Binding MenuList}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                            <DataGridTemplateColumn.CellEditingTemplate>
-                                <DataTemplate>
-                                    <ComboBox ItemsSource="{Binding MenuList}" Width="100">
-                                        <ComboBox.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Orientation="Horizontal" >
-                                                    <TextBlock Text="{Binding MenuName}" />
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ComboBox.ItemTemplate>
-                                    </ComboBox>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellEditingTemplate>
-                        </DataGridTemplateColumn>
-                        
-                    </DataGrid.Columns>
-                    
-                </DataGrid>-->
             </StackPanel>
 
             <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
@@ -339,10 +298,10 @@
         </Grid>
         
         <!-- User Panel Weekly Timetable-->
-        <Label Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="5" Content="USER PANEL" Margin="0 10"/>
+        <Label Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="5" Content="USER PANEL" Margin="0 10" FontSize="18" FontWeight="Bold"/>
         <Grid Grid.Row="3" Grid.Column="3" Background="LightGray">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" ></ColumnDefinition>
+                <ColumnDefinition Width="auto"  ></ColumnDefinition>
                 <ColumnDefinition Width="auto" ></ColumnDefinition>
                 <ColumnDefinition Width="auto" ></ColumnDefinition>
                 <ColumnDefinition Width="auto" ></ColumnDefinition>
@@ -351,20 +310,16 @@
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto" ></RowDefinition>
+                <RowDefinition Height="300"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <!--<Label Grid.Row="0" Grid.Column="0" Content="Monday" Width="80"/>
-            <Label Grid.Row="0" Grid.Column="1" Content="Tuesday" Width="80"/>
-            <Label Grid.Row="0" Grid.Column="2" Content="Wednesday" Width="80"/>
-            <Label Grid.Row="0" Grid.Column="3" Content="Thursday" Width="80"/>
-            <Label Grid.Row="0" Grid.Column="4" Content="Friday" Width="80"/>-->
-            
-            <DataGrid Grid.Row="1" x:Name="MondayMenu" AutoGenerateColumns="False" 
-                      CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False">
+            <DataGrid Grid.Row="1" x:Name="MondayMenu" SelectedValue="{Binding SelectedMenuMonday}" 
+                      cal:Message.Attach="[Event SelectionChanged] = [Action UserSelectMenu($this, 'Monday')]"
+                      AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" 
+                      CanUserResizeColumns="False" CanUserResizeRows="False">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Monday"  >
                         <DataGridTemplateColumn.CellTemplate>
@@ -379,8 +334,10 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DataGrid Grid.Row="1" Grid.Column="1" x:Name="TuesdayMenu" AutoGenerateColumns="False" 
-                      CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False">
+            <DataGrid Grid.Row="1" Grid.Column="1" x:Name="TuesdayMenu" SelectedItem="{Binding SelectedMenuTuesday}"
+                      cal:Message.Attach="[Event SelectionChanged] = [Action UserSelectMenu($this, 'Tuesday')]"
+                      AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" 
+                      CanUserResizeColumns="False" CanUserResizeRows="False">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Tuesday"  >
                         <DataGridTemplateColumn.CellTemplate>
@@ -395,8 +352,10 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DataGrid Grid.Row="1" Grid.Column="2" x:Name="WednesdayMenu" AutoGenerateColumns="False" 
-                      CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False">
+            <DataGrid Grid.Row="1" Grid.Column="2" x:Name="WednesdayMenu" SelectedItem="{Binding SelectedMenuWednesday}"
+                      cal:Message.Attach="[Event SelectionChanged] = [Action UserSelectMenu($this, 'Wednesday')]"
+                      AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False"
+                      CanUserResizeColumns="False" CanUserResizeRows="False">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Wednesday"  >
                         <DataGridTemplateColumn.CellTemplate>
@@ -411,8 +370,10 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DataGrid Grid.Row="1" Grid.Column="3" x:Name="ThursdayMenu" AutoGenerateColumns="False" 
-                      CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False">
+            <DataGrid Grid.Row="1" Grid.Column="3" x:Name="ThursdayMenu" SelectedItem="{Binding SelectedMenuThursday}"
+                      cal:Message.Attach="[Event SelectionChanged] = [Action UserSelectMenu($this, 'Thursday')]"
+                      AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" 
+                      CanUserResizeColumns="False" CanUserResizeRows="False">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Thursday"  >
                         <DataGridTemplateColumn.CellTemplate>
@@ -427,8 +388,10 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DataGrid Grid.Row="1" Grid.Column="4" x:Name="FridayMenu" AutoGenerateColumns="False" 
-                      CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False">
+            <DataGrid Grid.Row="1" Grid.Column="4" x:Name="FridayMenu" SelectedItem="{Binding SelectedMenuFriday}"
+                      cal:Message.Attach="[Event SelectionChanged] = [Action UserSelectMenu($this, 'Friday')]"
+                      AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" 
+                      CanUserResizeColumns="False" CanUserResizeRows="False">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Friday" >
                         <DataGridTemplateColumn.CellTemplate>

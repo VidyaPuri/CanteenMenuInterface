@@ -150,6 +150,76 @@ namespace CanteenMenuInterface
             }
         }
 
+        #endregion
+
+        #region DateMenu Methods
+
+        /// <summary>
+        /// Return the list of all Date Menus in DB
+        /// </summary>
+        /// <returns></returns>
+        public List<DateMenuModel> GetDateMenus()
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("CanteenMenuDB")))
+            {
+                var output = connection.Query<DateMenuModel>("dbo.DateMenuViewAll").ToList();
+
+                return output;
+            }
+        }
+
+        /// <summary>
+        /// Inserts Date Menu to DB
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="menuKey"></param>
+        public void InsertDateMenu(DateTime date, int menuKey)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("CanteenMenuDB")))
+            {
+                DateMenuModel dateMenuModel = new DateMenuModel
+                {
+                    DateMenuKey = 0,
+                    Date = date,
+                    MenuKey = menuKey
+                };
+
+                connection.Execute("dbo.DateMenuAddOrEdit @DateMenuKey, @Date, @MenuKey", dateMenuModel);
+            }
+        }
+
+        /// <summary>
+        /// Delete DateMenu 
+        /// </summary>
+        /// <param name="dateMenuKey"></param>
+        public void DeleteDateMenu(int dateMenuKey)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("CanteenMenuDB")))
+            {
+                connection.Execute("dbo.DateMenuDeleteByID @DateMenuKey", new { DateMenuKey = dateMenuKey });
+            }
+        }
+
+        /// <summary>
+        /// Edits the selected DateMenuEntry
+        /// </summary>
+        /// <param name="dateMenuKey"></param>
+        /// <param name="date"></param>
+        /// <param name="menuKey"></param>
+        public void EditDateMenu(int dateMenuKey ,DateTime date, int menuKey)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("CanteenMenuDB")))
+            {
+                DateMenuModel dateMenuModel = new DateMenuModel
+                {
+                    DateMenuKey = dateMenuKey,
+                    Date = date,
+                    MenuKey = menuKey
+                };
+
+                connection.Execute("dbo.DateMenuAddOrEdit @DateMenuKey, @Date, @MenuKey", dateMenuModel);
+            }
+        }
 
         #endregion
 

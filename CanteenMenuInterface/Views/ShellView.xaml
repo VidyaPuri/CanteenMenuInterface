@@ -4,13 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CanteenMenuInterface.Views"
+        xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
         Title="ShellView" Height="600" Width="1280" Background="#fffcf9">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="5"></RowDefinition>
         </Grid.RowDefinitions>
@@ -127,6 +128,7 @@
 
         </Grid>
 
+        <Label Grid.Row="2" Grid.Column="1" Content="OPERATOR PANEL" />
         <!-- Weekly Timetable -->
         <Grid Grid.Row="3" Grid.Column="1">
             <Grid.ColumnDefinitions>
@@ -154,22 +156,19 @@
                 <ItemsControl ItemsSource="{Binding MenuList}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <ComboBox ItemsSource="{Binding MenuList}" Width="100">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal" >
-                                            <TextBlock Text="{Binding MenuName}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
+                            <ToggleButton Content="{Binding MenuName}"
+                                cal:Message.Attach="
+                                    [Event Checked] = [Action MenuSelector($dataContext, 'Monday')];
+                                    [Event Unchecked] = [Action MenuDeselector($dataContext, 'Monday')]
+                                    "> 
+                            </ToggleButton>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <ListBox ItemsSource="{Binding MenuList}" SelectedItem="{Binding SelectedItem}">
+                <!--<ListBox ItemsSource="{Binding MenuList}" SelectedItem="{Binding SelectedItem}">
                     <ListBox.ItemContainerStyle>
-                        <!-- Style to get rid of the selection visual -->
+                         Style to get rid of the selection visual 
                         <Style TargetType="{x:Type ListBoxItem}">
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -183,7 +182,7 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <RadioButton Content="{Binding MenuName}" GroupName="Properties">
-                                <!-- Binding IsChecked to IsSelected requires no support code -->
+                                 Binding IsChecked to IsSelected requires no support code 
                                 <RadioButton.IsChecked>
                                     <Binding Path="IsSelected"
                              RelativeSource="{RelativeSource AncestorType=ListBoxItem}"
@@ -207,11 +206,11 @@
                 <DataGrid x:Name="SelectedMenusList">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn Header="Monday" >
-                            <!--<DataGridTemplateColumn.CellTemplate >
+                            <DataGridTemplateColumn.CellTemplate >
                                 <DataTemplate >
                                     <TextBlock Text="{Binding MenuList}"/>
                                 </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>-->
+                            </DataGridTemplateColumn.CellTemplate>
                             <DataGridTemplateColumn.CellEditingTemplate>
                                 <DataTemplate>
                                     <ComboBox ItemsSource="{Binding MenuList}" Width="100">
@@ -229,9 +228,191 @@
                         
                     </DataGrid.Columns>
                     
-                </DataGrid>
+                </DataGrid>-->
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                <ItemsControl ItemsSource="{Binding MenuList}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ToggleButton Content="{Binding MenuName}" 
+                                cal:Message.Attach="
+                                    [Event Checked] = [Action MenuSelector($dataContext, 'Tuesday')];
+                                    [Event Unchecked] = [Action MenuDeselector($dataContext, 'Tuesday')]
+                                    ">
+                            </ToggleButton>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
+                <ItemsControl ItemsSource="{Binding MenuList}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ToggleButton Content="{Binding MenuName}" 
+                                cal:Message.Attach="
+                                    [Event Checked] = [Action MenuSelector($dataContext, 'Wednesday')];
+                                    [Event Unchecked] = [Action MenuDeselector($dataContext, 'Wednesday')]
+                                    ">
+                            </ToggleButton>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal">
+                <ItemsControl ItemsSource="{Binding MenuList}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ToggleButton Content="{Binding MenuName}" 
+                                cal:Message.Attach="
+                                    [Event Checked] = [Action MenuSelector($dataContext, 'Thursday')];
+                                    [Event Unchecked] = [Action MenuDeselector($dataContext, 'Thursday')]
+                                    ">
+                            </ToggleButton>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="4" Orientation="Horizontal">
+                <ItemsControl ItemsSource="{Binding MenuList}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ToggleButton Content="{Binding MenuName}" 
+                                cal:Message.Attach="
+                                    [Event Checked] = [Action MenuSelector($dataContext, 'Friday')];
+                                    [Event Unchecked] = [Action MenuDeselector($dataContext, 'Friday')]
+                                    ">
+                            </ToggleButton>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </StackPanel>
             
         </Grid>
+        
+
+        <Label Grid.Row="2" Grid.Column="3" Content="USER PANEL" />
+        <Grid Grid.Row="3" Grid.Column="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" ></ColumnDefinition>
+                <ColumnDefinition Width="auto" ></ColumnDefinition>
+                <ColumnDefinition Width="auto" ></ColumnDefinition>
+                <ColumnDefinition Width="auto" ></ColumnDefinition>
+                <ColumnDefinition Width="auto" ></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <!--<Label Grid.Row="0" Grid.Column="0" Content="Monday" Width="80"/>
+            <Label Grid.Row="0" Grid.Column="1" Content="Tuesday" Width="80"/>
+            <Label Grid.Row="0" Grid.Column="2" Content="Wednesday" Width="80"/>
+            <Label Grid.Row="0" Grid.Column="3" Content="Thursday" Width="80"/>
+            <Label Grid.Row="0" Grid.Column="4" Content="Friday" Width="80"/>-->
+            
+            <DataGrid Grid.Row="1" x:Name="MondayMenu" AutoGenerateColumns="False" 
+                      CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Monday"  >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Path=MenuName}" FontSize="14" />
+                                    <TextBlock Text="{Binding Path=Description}" FontStyle="Italic" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <DataGrid Grid.Row="1" Grid.Column="1" x:Name="TuesdayMenu" AutoGenerateColumns="False" 
+                      CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Tuesday"  >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Path=MenuName}" FontSize="14" />
+                                    <TextBlock Text="{Binding Path=Description}" FontStyle="Italic" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <DataGrid Grid.Row="1" Grid.Column="2" x:Name="WednesdayMenu" AutoGenerateColumns="False" 
+                      CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Wednesday"  >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Path=MenuName}" FontSize="14" />
+                                    <TextBlock Text="{Binding Path=Description}" FontStyle="Italic" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <DataGrid Grid.Row="1" Grid.Column="3" x:Name="ThursdayMenu" AutoGenerateColumns="False" 
+                      CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Thursday"  >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Path=MenuName}" FontSize="14" />
+                                    <TextBlock Text="{Binding Path=Description}" FontStyle="Italic" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <DataGrid Grid.Row="1" Grid.Column="4" x:Name="FridayMenu" AutoGenerateColumns="False" 
+                      CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Friday" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Path=MenuName}" FontSize="14" />
+                                    <TextBlock Text="{Binding Path=Description}" FontStyle="Italic" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <ListBox Grid.Row="2" ItemsSource="{Binding MondayMenu}" SelectedItem="{Binding SelectedItem}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton Content="{Binding MenuName}" GroupName="Properties" >
+                            <RadioButton.IsChecked>
+                                <Binding Path="IsSelected"
+                             RelativeSource="{RelativeSource AncestorType=ListBoxItem}"
+                             Mode="TwoWay" />
+                            </RadioButton.IsChecked>
+                        </RadioButton>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+        </Grid>
     </Grid>
+
+   
 </Window>

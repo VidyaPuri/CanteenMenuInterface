@@ -14,12 +14,7 @@ namespace CanteenMenuInterface.ViewModels
         {
             ShowMenus();
             ShowUsers();
-
-            SelectedMenusList.Add(new MenuModel());
-            SelectedMenusList.Add(new MenuModel());
-            SelectedMenusList.Add(new MenuModel());
-            SelectedMenusList.Add(new MenuModel());
-            SelectedMenusList.Add(new MenuModel());
+            FillTheList();
         }
 
         DataAccess db = new DataAccess();
@@ -79,14 +74,21 @@ namespace CanteenMenuInterface.ViewModels
             set => Set(ref _SelectedMenu, value);
         }
 
-        private BindableCollection<MenuModel> _SelectedMenusList = new BindableCollection<MenuModel>();
+        private BindableCollection<List<MenuModel>> _SelectedMenusList = new BindableCollection<List<MenuModel>>();
 
-        public BindableCollection<MenuModel> SelectedMenusList
+        public BindableCollection<List<MenuModel>> SelectedMenusList
         {
             get { return _SelectedMenusList; }
             set => Set(ref _SelectedMenusList, value);
         }
 
+        private void FillTheList()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                SelectedMenusList.Add(MenuList);
+            }
+        }
 
         #endregion
 
@@ -234,7 +236,124 @@ namespace CanteenMenuInterface.ViewModels
 
         #endregion
 
-    
+        #region Menu Selection 
 
+        private WeeklyMenuModel _WeeklyMenu = new WeeklyMenuModel();
+
+        public WeeklyMenuModel WeeklyMenu
+        {
+            get { return _WeeklyMenu; }
+            set => Set(ref _WeeklyMenu, value);
+
+        }
+
+        private BindableCollection<MenuModel> _MondayMenu = new BindableCollection<MenuModel>();
+        private BindableCollection<MenuModel> _TuesdayMenu = new BindableCollection<MenuModel>();
+        private BindableCollection<MenuModel> _WednesdayMenu = new BindableCollection<MenuModel>();
+        private BindableCollection<MenuModel> _ThursdayMenu = new BindableCollection<MenuModel>();
+        private BindableCollection<MenuModel> _FridayMenu = new BindableCollection<MenuModel>();
+
+        public BindableCollection<MenuModel> MondayMenu
+        {
+            get { return _MondayMenu; }
+            set => Set(ref _MondayMenu, value);
+        }
+
+
+        public BindableCollection<MenuModel> TuesdayMenu
+        {
+            get { return _TuesdayMenu; }
+            set => Set(ref _TuesdayMenu, value);
+        }
+
+
+        public BindableCollection<MenuModel> WednesdayMenu
+        {
+            get { return _WednesdayMenu; }
+            set => Set(ref _WednesdayMenu, value);
+        }
+
+
+        public BindableCollection<MenuModel> ThursdayMenu
+        {
+            get { return _ThursdayMenu; }
+            set => Set(ref _ThursdayMenu, value);
+        }
+
+        public BindableCollection<MenuModel> FridayMenu
+        {
+            get { return _FridayMenu; }
+            set => Set(ref _FridayMenu, value);
+        }
+
+
+        /// <summary>
+        /// Adds selected menus to corespondend menu list
+        /// </summary>
+        public void MenuSelector(object source, string day)
+        {
+            if (!(source is MenuModel menuModel))
+                return;
+
+            switch (day)
+            {
+                case "Monday":
+                    WeeklyMenu.MondayList.Add(menuModel);
+                    MondayMenu.Add(menuModel);
+                    break;
+                case "Tuesday":
+                    WeeklyMenu.TusedayList.Add(menuModel);
+                    TuesdayMenu.Add(menuModel);
+                    break;
+                case "Wednesday":
+                    WeeklyMenu.WednesdayList.Add(menuModel);
+                    WednesdayMenu.Add(menuModel);
+                    break;
+                case "Thursday":
+                    WeeklyMenu.ThursdayList.Add(menuModel);
+                    ThursdayMenu.Add(menuModel);
+                    break;
+                case "Friday":
+                    WeeklyMenu.FridayList.Add(menuModel);
+                    FridayMenu.Add(menuModel);
+                    break;
+            }
+            WeeklyMenu.MondayList.Refresh();
+        }
+
+        /// <summary>
+        /// Removes deselected menus from the list 
+        /// </summary>
+         public void MenuDeselector(object source, string day)
+         {
+            if (!(source is MenuModel menuModel))
+                return;
+
+            switch (day)
+            {
+                case "Monday":
+                    WeeklyMenu.MondayList.Remove(menuModel);
+                    MondayMenu.Remove(menuModel);
+                    break;
+                case "Tuesday":
+                    WeeklyMenu.TusedayList.Remove(menuModel);
+                    TuesdayMenu.Remove(menuModel);
+                    break;
+                case "Wednesday":
+                    WeeklyMenu.WednesdayList.Remove(menuModel);
+                    WednesdayMenu.Remove(menuModel);
+                    break;
+                case "Thursday":
+                    WeeklyMenu.ThursdayList.Remove(menuModel);
+                    ThursdayMenu.Remove(menuModel);
+                    break;
+                case "Friday":
+                    WeeklyMenu.FridayList.Remove(menuModel);
+                    FridayMenu.Remove(menuModel);
+                    break;
+            }
+         }
+
+        #endregion
     }
 }

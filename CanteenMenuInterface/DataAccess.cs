@@ -158,13 +158,28 @@ namespace CanteenMenuInterface
         /// Return the list of all Date Menus in DB
         /// </summary>
         /// <returns></returns>
-        public List<DateMenuModel> GetDateMenus()
+        public List<DateMenuModel> GetDateMenu()
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
             {
                 var output = connection.Query<DateMenuModel>("dbo.DateMenuViewAll").ToList();
 
                 return output;
+            }
+        }
+
+        /// <summary>
+        /// Return DateMenus at specified date
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public List<MenuModel> GetDateMenuByDate(DateTime dateTime)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
+            {
+                var output = connection.Query<MenuModel>("dbo.DateMenuGetByDateReturnMenus @Date", new { Date = dateTime }).ToList();
+
+                 return output;
             }
         }
 

@@ -20,11 +20,15 @@ namespace CanteenMenuInterface.ViewModels
 
             CurrentDate = DateTime.Today;
             CurrentWeek = DateHelper.GetCurrentWeek();
+            CurrentDaysDate = DateHelper.GetThisWeekDays();
             MondayDate = DateHelper.GetThisWeekDays()[0];
             TuesdayDate = DateHelper.GetThisWeekDays()[1];
             WednesdayDate = DateHelper.GetThisWeekDays()[2];
             ThursdayDate = DateHelper.GetThisWeekDays()[3];
             FridayDate = DateHelper.GetThisWeekDays()[4];
+
+            UpdateWeeklyMenuTable();
+
         }
 
         DataAccess db = new DataAccess();
@@ -248,15 +252,6 @@ namespace CanteenMenuInterface.ViewModels
 
         #region Menu Selection 
 
-        private WeeklyMenuModel _WeeklyMenu = new WeeklyMenuModel();
-
-        public WeeklyMenuModel WeeklyMenu
-        {
-            get { return _WeeklyMenu; }
-            set => Set(ref _WeeklyMenu, value);
-
-        }
-
         private BindableCollection<MenuModel> _MondayMenu = new BindableCollection<MenuModel>();
         private BindableCollection<MenuModel> _TuesdayMenu = new BindableCollection<MenuModel>();
         private BindableCollection<MenuModel> _WednesdayMenu = new BindableCollection<MenuModel>();
@@ -269,20 +264,17 @@ namespace CanteenMenuInterface.ViewModels
             set => Set(ref _MondayMenu, value);
         }
 
-
         public BindableCollection<MenuModel> TuesdayMenu
         {
             get { return _TuesdayMenu; }
             set => Set(ref _TuesdayMenu, value);
         }
 
-
         public BindableCollection<MenuModel> WednesdayMenu
         {
             get { return _WednesdayMenu; }
             set => Set(ref _WednesdayMenu, value);
         }
-
 
         public BindableCollection<MenuModel> ThursdayMenu
         {
@@ -308,41 +300,73 @@ namespace CanteenMenuInterface.ViewModels
             switch (day)
             {
                 case "Monday":
-                    WeeklyMenu.MondayList.Add(menuModel);
-                    MondayMenu.Add(menuModel);
+                    //MondayMenu.Add(menuModel);
                     db.InsertDateMenu(MondayDate, menuModel.MenuKey);
                     break;
                 case "Tuesday":
-                    WeeklyMenu.TusedayList.Add(menuModel);
                     TuesdayMenu.Add(menuModel);
                     db.InsertDateMenu(TuesdayDate, menuModel.MenuKey);
 
                     break;
                 case "Wednesday":
-                    WeeklyMenu.WednesdayList.Add(menuModel);
                     WednesdayMenu.Add(menuModel);
                     db.InsertDateMenu(WednesdayDate, menuModel.MenuKey);
 
                     break;
                 case "Thursday":
-                    WeeklyMenu.ThursdayList.Add(menuModel);
                     ThursdayMenu.Add(menuModel);
                     db.InsertDateMenu(ThursdayDate, menuModel.MenuKey);
 
                     break;
                 case "Friday":
-                    WeeklyMenu.FridayList.Add(menuModel);
                     FridayMenu.Add(menuModel);
                     db.InsertDateMenu(FridayDate, menuModel.MenuKey);
                     break;
             }
-            WeeklyMenu.MondayList.Refresh();
+            UpdateWeeklyMenuTable();
+        }
+
+        /// <summary>
+        /// Updates the Weekly Menu table
+        /// </summary>
+        private void UpdateWeeklyMenuTable()
+        {
+            MondayMenu.Clear();
+            TuesdayMenu.Clear();
+            WednesdayMenu.Clear();
+            ThursdayMenu.Clear();
+            FridayMenu.Clear();
+            for (int i = 0; i < CurrentDaysDate.Count(); i++)
+            {
+                var menuList = db.GetDateMenuByDate(CurrentDaysDate[i]);
+                foreach (var item in menuList)
+                {
+                    switch (CurrentDaysDate[i].DayOfWeek.ToString())
+                    {
+                        case "Monday":
+                            MondayMenu.Add(item);
+                            break;
+                        case "Tuesday":
+                            TuesdayMenu.Add(item);
+                            break;
+                        case "Wednesday":
+                            WednesdayMenu.Add(item);
+                            break;
+                        case "Thursday":
+                            ThursdayMenu.Add(item);
+                            break;
+                        case "Friday":
+                            FridayMenu.Add(item);
+                            break;
+                    }
+                }
+            }
         }
 
         /// <summary>
         /// Removes deselected menus from the list 
         /// </summary>
-         public void MenuDeselector(object source, string day)
+        public void MenuDeselector(object source, string day)
          {
             if (!(source is MenuModel menuModel))
                 return;
@@ -350,40 +374,37 @@ namespace CanteenMenuInterface.ViewModels
             switch (day)
             {
                 case "Monday":
-                    WeeklyMenu.MondayList.Remove(menuModel);
                     MondayMenu.Remove(menuModel);
                     db.DeleteDateMenuByDateAndMenuKey(menuModel.MenuKey, MondayDate);
                     break;
                 case "Tuesday":
-                    WeeklyMenu.TusedayList.Remove(menuModel);
                     TuesdayMenu.Remove(menuModel);
                     db.DeleteDateMenuByDateAndMenuKey(menuModel.MenuKey, TuesdayDate);
                     break;
                 case "Wednesday":
-                    WeeklyMenu.WednesdayList.Remove(menuModel);
                     WednesdayMenu.Remove(menuModel);
                     db.DeleteDateMenuByDateAndMenuKey(menuModel.MenuKey, WednesdayDate);
                     break;
                 case "Thursday":
-                    WeeklyMenu.ThursdayList.Remove(menuModel);
                     ThursdayMenu.Remove(menuModel);
                     db.DeleteDateMenuByDateAndMenuKey(menuModel.MenuKey, ThursdayDate);
                     break;
                 case "Friday":
-                    WeeklyMenu.FridayList.Remove(menuModel);
                     FridayMenu.Remove(menuModel);
                     db.DeleteDateMenuByDateAndMenuKey(menuModel.MenuKey, FridayDate);
                     break;
             }
 
-            db.DeleteDateMenu(menuModel.MenuKey);
-
+            //db.DeleteDateMenu(menuModel.MenuKey);
+            UpdateWeeklyMenuTable();
         }
 
 
         #endregion
 
         #region Date Methods
+
+        #region Date Properties
 
         private int _CurrentWeek;
         private DateTime _CurrentDate;
@@ -392,6 +413,7 @@ namespace CanteenMenuInterface.ViewModels
         private DateTime _WednesdayDate;
         private DateTime _ThursdayDate;
         private DateTime _FridayDate;
+        private List<DateTime> _CurrentDaysDate = new List<DateTime>();
 
         public int CurrentWeek
         {
@@ -435,21 +457,42 @@ namespace CanteenMenuInterface.ViewModels
             set => Set(ref _FridayDate, value);
         }
 
+        public List<DateTime> CurrentDaysDate
+        {
+            get { return _CurrentDaysDate; }
+            set => Set(ref _CurrentDaysDate, value);
+        }
+
+
+        #endregion
+
+        /// <summary>
+        /// Operator Previous Week
+        /// </summary>
         public void PreviousWeek()
         {
             CurrentDate = CurrentDate.AddDays(-7);
             ChangedDate();
+            UpdateWeeklyMenuTable();
         }
 
+        /// <summary>
+        /// Operator Next Week
+        /// </summary>
         public void NextWeek()
         {
             CurrentDate = CurrentDate.AddDays(7);
             ChangedDate();
+            UpdateWeeklyMenuTable();
         }
 
+        /// <summary>
+        /// Changed Date Method Call
+        /// </summary>
         private void ChangedDate()
         {
             CurrentWeek = DateHelper.GetChangedWeek(CurrentDate);
+            CurrentDaysDate = DateHelper.GetSelectedWeekDays(CurrentDate);
             MondayDate = DateHelper.GetSelectedWeekDays(CurrentDate)[0];
             TuesdayDate = DateHelper.GetSelectedWeekDays(CurrentDate)[1];
             WednesdayDate = DateHelper.GetSelectedWeekDays(CurrentDate)[2];

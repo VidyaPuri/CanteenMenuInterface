@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CanteenMenuInterface.Views"
         xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
-        Title="ShellView" Height="600" Width="1280" Background="#fffcf9">
+        Title="ShellView" Height="600" Width="1440" Background="#fffcf9">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5"></RowDefinition>
@@ -21,11 +21,13 @@
             <ColumnDefinition Width="auto"></ColumnDefinition>
             <ColumnDefinition Width="20"></ColumnDefinition>
             <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition Width="20"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
             <ColumnDefinition Width="5"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
         <!-- MENUS -->
-        <Grid Grid.Row="1" Grid.Column="1">
+        <Grid Grid.Row="1" Grid.Column="1" Background="LightGray">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -76,13 +78,17 @@
         </Grid>
         
         <!-- USERS-->
-        <Grid Grid.Row="1" Grid.Column="3">
+        <Grid Grid.Row="1" Grid.Column="3" Background="LightGray">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
                 <ColumnDefinition Width="20"></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="20" ></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"></RowDefinition>
@@ -126,8 +132,24 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-        </Grid>
+            <!-- SELECTED USER -->
+            <Label Grid.Row="0" Grid.Column="6" Content="Selected User" FontSize="18" />
+            <Label Grid.Row="1" Grid.Column="6" Content="First Name"/>
+            <Label Grid.Row="2" Grid.Column="6" Content="Second Name"/>
+            <Label Grid.Row="3" Grid.Column="6" Content="Email"/>
+            <Label Grid.Row="4" Grid.Column="6" Content="UserKey"/>
+            <Label Grid.Row="5" Grid.Column="6" Content="UserType"/>
+            <Label Grid.Row="6" Grid.Column="6" Content="Group"/>
 
+            <Label Grid.Row="1" Grid.Column="7" Content="{Binding SelectedUser.FirstName}"/>
+            <Label Grid.Row="2" Grid.Column="7" Content="{Binding SelectedUser.LastName}"/>
+            <Label Grid.Row="3" Grid.Column="7" Content="{Binding SelectedUser.Email}"/>
+            <Label Grid.Row="4" Grid.Column="7" Content="{Binding SelectedUser.UserKey}"/>
+            <Label Grid.Row="5" Grid.Column="7" Content="{Binding SelectedUser.UserTypeKey}"/>
+            <Label Grid.Row="6" Grid.Column="7" Content="{Binding SelectedUser.GroupKey}"/>
+        </Grid>
+        
+        <!-- Weekly Menus -->
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Margin="0 10">
             <Label  Content="OPERATOR PANEL" />
             <Label Content="Week #"/>
@@ -136,8 +158,8 @@
             <Button x:Name="NextWeek" Content="Next Week" Margin="10 0"/>
         </StackPanel>
         
-        <!-- Weekly Timetable -->
-        <Grid Grid.Row="3" Grid.Column="1">
+        <!-- Operator Weekly Timetable -->
+        <Grid Grid.Row="3" Grid.Column="1" Background="LightGray">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120" ></ColumnDefinition>
                 <ColumnDefinition Width="120" ></ColumnDefinition>
@@ -316,15 +338,16 @@
             
         </Grid>
         
-
-        <Label Grid.Row="2" Grid.Column="3" Content="USER PANEL" />
-        <Grid Grid.Row="3" Grid.Column="3">
+        <!-- User Panel Weekly Timetable-->
+        <Label Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="5" Content="USER PANEL" Margin="0 10"/>
+        <Grid Grid.Row="3" Grid.Column="3" Background="LightGray">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" ></ColumnDefinition>
                 <ColumnDefinition Width="auto" ></ColumnDefinition>
                 <ColumnDefinition Width="auto" ></ColumnDefinition>
                 <ColumnDefinition Width="auto" ></ColumnDefinition>
                 <ColumnDefinition Width="auto" ></ColumnDefinition>
+                <ColumnDefinition Width="*" ></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>

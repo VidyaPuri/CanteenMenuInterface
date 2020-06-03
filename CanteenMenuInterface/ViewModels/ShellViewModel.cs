@@ -7,12 +7,46 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace CanteenMenuInterface.ViewModels
 {
     public class ShellViewModel : Screen
     {
-        DataAccess db = new DataAccess();
+        #region Window Control
+
+        private WindowState windowState;
+        public WindowState WindowState
+        {
+            get { return windowState; }
+            set
+            {
+                windowState = value;
+                NotifyOfPropertyChange(() => WindowState);
+            }
+        }
+
+        public void MaximizeWindow()
+        {
+            if (WindowState == WindowState.Maximized)
+                WindowState = WindowState.Normal;
+            else
+                WindowState = WindowState.Maximized;
+        }
+
+        public void MinimizeWindow()
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        public bool myCondition { get { return (false); } }
+
+        public void CloseWindow()
+        {
+            Application.Current.Shutdown();
+        }
+
+        #endregion
 
         #region Constructor
 
@@ -27,6 +61,8 @@ namespace CanteenMenuInterface.ViewModels
         }
 
         #endregion
+
+        DataAccess db = new DataAccess();
 
         #region MENUS
 

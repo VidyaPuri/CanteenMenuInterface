@@ -7,106 +7,61 @@
         xmlns:converters="clr-namespace:CanteenMenuInterface.Converters"
         xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
-        Title="ShellView" Height="1280" Width="1920" Background="#fffcf9">
+        WindowState="{Binding WindowState}"
+        WindowStyle="None"
+        FontSize="12"
+        Title="Canteen Menu Selector" Height="1280" Width="2020" Background="#fffcf9">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="50"/>
+    </WindowChrome.WindowChrome>
 
     <Window.Resources>
         <converters:RoleConverter x:Key="RoleConverter"/>
     </Window.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5"></ColumnDefinition>
+            <ColumnDefinition Width="10"></ColumnDefinition>
             <ColumnDefinition Width="auto"></ColumnDefinition>
             <ColumnDefinition Width="20"></ColumnDefinition>
             <ColumnDefinition Width="auto"></ColumnDefinition>
             <ColumnDefinition Width="20"></ColumnDefinition>
             <ColumnDefinition Width="auto"></ColumnDefinition>
-            <ColumnDefinition Width="5"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="10"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        
+        <Border Grid.Row="1" Grid.Column="1" Grid.RowSpan="7" Grid.ColumnSpan="7" BorderBrush="Black" BorderThickness="1"/>
 
-        <!-- MENUS -->
-        <Grid Grid.Row="1" Grid.Column="1" Background="LightGray">
+        <!-- Menus -->
+        <Label Grid.Row="1" Grid.Column="1" Content="Menu" FontSize="18" FontWeight="Bold" />
+
+        <GroupBox Grid.Row="2" Grid.Column="1"  Header="Menu" BorderThickness="1" BorderBrush="DimGray" Margin="5">
+            <Grid Grid.Row="2" Grid.Column="1" Margin="5"  >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="140"></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
                 <ColumnDefinition Width="30"></ColumnDefinition>
-                <ColumnDefinition Width="auto"></ColumnDefinition>
-                <ColumnDefinition Width="auto"></ColumnDefinition>
-                <ColumnDefinition Width="auto"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="20"></RowDefinition>
-            </Grid.RowDefinitions>
-
-            <Label Grid.Row="0" Grid.Column="0" Content="Menu" FontSize="18" FontWeight="Bold" />
-            <Label Grid.Row="1" Grid.Column="0" Content="Name"/>
-            <TextBox Grid.Row="1" Grid.Column="1" 
-                     Text="{Binding MenuNameInput, FallbackValue='Menu name'}" MinWidth="70" VerticalAlignment="Center" />
-            <Label Grid.Row="2" Content="Description"/>
-            <TextBox Grid.Row="2" Grid.Column="1" 
-                     Text="{Binding MenuDescriptionInput,FallbackValue='Menu description'}" MinWidth="70" VerticalAlignment="Center" />
-
-            <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal"  
-                        Visibility ="{Binding SelectedUserRoleKey, Converter={StaticResource RoleConverter}}">
-                <Button x:Name="AddMenu" Content="Add Menu" Margin="3" />
-                <Button x:Name="EditSelectedMenu" Content="Edit Menu" Margin="3" />
-                <Button x:Name="DeleteSelectedMenu" Content="Delete Menu" Margin="3" />
-            </StackPanel>
-
-
-            <ListView Grid.Row="1" Grid.Column="5" Grid.RowSpan="6" MinHeight="85" MinWidth="100" MaxHeight="250"
-                ItemsSource="{Binding MenuList}"  SelectedIndex="{Binding SelectedMenuIdx}" SelectedItem="{Binding SelectedMenu}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding MenuKey}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18"/>
-                            <TextBlock Text="   " Height="20"/>
-                            <TextBlock Text="{Binding MenuName}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
-                            <TextBlock Text="   " Height="20"/>
-                            <TextBlock Text="{Binding Description}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
-        
-        <!-- USERS-->
-        <Grid Grid.Row="1" Grid.Column="3" Background="LightGray">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
                 <ColumnDefinition Width="20"></ColumnDefinition>
-                <ColumnDefinition Width="auto"></ColumnDefinition>
-                <ColumnDefinition Width="auto"></ColumnDefinition>
-                <ColumnDefinition Width="20" ></ColumnDefinition>
-                <ColumnDefinition Width="auto"></ColumnDefinition>
-                <ColumnDefinition Width="150"></ColumnDefinition>
-                <ColumnDefinition Width="150"></ColumnDefinition>
-                <ColumnDefinition Width="auto"></ColumnDefinition>
-                <ColumnDefinition Width="auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
+
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
@@ -115,430 +70,497 @@
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="20"></RowDefinition>
-
             </Grid.RowDefinitions>
+                
+                <Label Grid.Row="1" Grid.Column="0" Content="Name"/>
+                <TextBox Grid.Row="1" Grid.Column="1" 
+                     Text="{Binding MenuNameInput, FallbackValue='Menu name'}" MinWidth="70" VerticalAlignment="Center" />
+                <Label Grid.Row="2" Content="Description"/>
+                <TextBox Grid.Row="2" Grid.Column="1" MaxWidth="100"
+                     Text="{Binding MenuDescriptionInput,FallbackValue='Menu description'}" MinWidth="70" VerticalAlignment="Center" />
 
-            <Label Grid.Row="0" Content="Users" FontSize="18" FontWeight="Bold"/>
-            
-            <Label Grid.Row="1" Content="First Name"/>
-            <Label Grid.Row="2" Content="Second Name"/>
-            <Label Grid.Row="3" Content="Email"/>
-            <Label Grid.Row="4" Content="User Role"/>
+                <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Orientation="Horizontal"  
+                        Visibility ="{Binding SelectedUserRoleKey, Converter={StaticResource RoleConverter}}">
+                    <Button x:Name="AddMenu" Content="Add Menu" Margin="3" Style="{DynamicResource ButtonStyle1}" />
+                    <Button x:Name="EditSelectedMenu" Content="Edit Menu" Margin="3" Style="{DynamicResource ButtonStyle1}"/>
+                    <Button x:Name="DeleteSelectedMenu" Content="Delete Menu" Margin="3" Style="{DynamicResource ButtonStyle1}"/>
+                </StackPanel>
 
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding UserFirstName}" Foreground="#FFB4B4B4" VerticalAlignment="Center" Height="18" MinWidth="100" Margin="3"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding UserLastName}" Foreground="#FFB4B4B4" VerticalAlignment="Center" Height="18" MinWidth="100" Margin="3"/>
-            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding UserEmail}" Foreground="#FFB4B4B4" VerticalAlignment="Center" Height="18" MinWidth="100" Margin="3"/>
-            <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
-                <RadioButton Content="Operator" cal:Message.Attach="[Event Checked] = [Action UserRoleSelector('Operator')]"
-                             VerticalAlignment="Center" FlowDirection="RightToLeft" Margin="5 0"></RadioButton>
-                <RadioButton Content="User" IsChecked="True" cal:Message.Attach="[Event Checked] = [Action UserRoleSelector('User')]"
-                             VerticalAlignment="Center" FlowDirection="RightToLeft" Margin="5 0"></RadioButton>
-            </StackPanel>
-            
-            <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal">
-                <Button x:Name="AddUser" Content="Add User" Margin="3"/>
-                <Button x:Name="EditSelectedUser" Content="Edit User" Margin="3"/>
-                <Button x:Name="DeleteSelectedUser" Content="Delete User" Margin="3"/>
-            </StackPanel>
 
-            <ListView Grid.Row="1" Grid.Column="3" Grid.RowSpan="8" MinHeight="85" MinWidth="200" MaxHeight="250" cal:Message.Attach="[Event MouseDoubleClick] = [Action FillUserForm($this)]"
-                ItemsSource="{Binding UserList}"  SelectedIndex="{Binding SelectedUserIdx}" SelectedItem="{Binding SelectedUser}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding UserKey}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18"/>
-                            <TextBlock Text="   " Height="20"/>
-                            <TextBlock Text="{Binding FirstName}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
-                            <TextBlock Text="   " Height="20"/>
-                            <TextBlock Text="{Binding LastName}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/><TextBlock Text="   " Height="20"/>
-                            <TextBlock Text="   " Height="20"/>
-                            <TextBlock Text="{Binding Email}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
-                            <TextBlock Text="   " Height="20"/>
-                            <TextBlock Text="{Binding UserRoleKey}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-            <!-- SELECTED USER -->
-            <Label Grid.Row="0" Grid.Column="6" Content="Selected User" FontSize="18" FontWeight="Bold"/>
-            <Label Grid.Row="1" Grid.Column="6" Content="First Name"/>
-            <Label Grid.Row="2" Grid.Column="6" Content="Second Name"/>
-            <Label Grid.Row="3" Grid.Column="6" Content="Email"/>
-            <Label Grid.Row="4" Grid.Column="6" Content="UserKey"/>
-            <Label Grid.Row="5" Grid.Column="6" Content="UserType"/>
-            <Label Grid.Row="6" Grid.Column="6" Content="Group"/>
-
-            <Label Grid.Row="1" Grid.Column="7" Content="{Binding SelectedUser.FirstName}"/>
-            <Label Grid.Row="2" Grid.Column="7" Content="{Binding SelectedUser.LastName}"/>
-            <Label Grid.Row="3" Grid.Column="7" Content="{Binding SelectedUser.Email}"/>
-            <Label Grid.Row="4" Grid.Column="7" Content="{Binding SelectedUser.UserKey}"/>
-            <Label Grid.Row="5" Grid.Column="7" Content="{Binding SelectedUser.UserRoleKey}"/>
-            <Label Grid.Row="6" Grid.Column="7" Content="{Binding SelectedUser.GroupKey}"/>
-
-            <Label Grid.Row="1" Grid.Column="8" Content="Weekly order" FontWeight="Bold"/>
-            <Label Grid.Row="2" Grid.Column="8" Content="{Binding SelectedItemMonday.MenuName}"/>
-            <Label Grid.Row="3" Grid.Column="8" Content="{Binding SelectedItemTuesday.MenuName}"/>
-            <Label Grid.Row="4" Grid.Column="8" Content="{Binding SelectedItemWednesday.MenuName}"/>
-            <Label Grid.Row="5" Grid.Column="8" Content="{Binding SelectedItemThursday.MenuName}"/>
-            <Label Grid.Row="6" Grid.Column="8" Content="{Binding SelectedItemFriday.MenuName}"/>
-
-            <Label Grid.Row="1" Grid.Column="9" Content="Date Menu Key" />
-            <Label Grid.Row="2" Grid.Column="9" Content="{Binding SelectedDateMenuItemMonday.DateMenuKey}"/>
-            <Label Grid.Row="3" Grid.Column="9" Content="{Binding SelectedDateMenuItemTuesday.DateMenuKey}"/>
-            <Label Grid.Row="4" Grid.Column="9" Content="{Binding SelectedDateMenuItemWednesday.DateMenuKey}"/>
-            <Label Grid.Row="5" Grid.Column="9" Content="{Binding SelectedDateMenuItemThursday.DateMenuKey}"/>
-            <Label Grid.Row="6" Grid.Column="9" Content="{Binding SelectedDateMenuItemFriday.DateMenuKey}"/>
-
-            <Button Grid.Row="7" Grid.Column="6" x:Name="SubmitOrder" Content="Submit Order" />
+                <ListView Grid.Row="1" Grid.Column="5" Grid.RowSpan="6" MinHeight="85" MinWidth="100" MaxHeight="250"
+                ItemsSource="{Binding MenuList}"  SelectedIndex="{Binding SelectedMenuIdx}" SelectedItem="{Binding SelectedMenu}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding MenuKey}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18"/>
+                                <TextBlock Text="   " Height="20"/>
+                                <TextBlock Text="{Binding MenuName}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
+                                <TextBlock Text="   " Height="20"/>
+                                <TextBlock Text="{Binding Description}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
         </Grid>
+        </GroupBox>
+
+        <!-- Users-->
+        <Label Grid.Row="1" Grid.Column="3" Content="Users" FontSize="18" FontWeight="Bold"/>
+        <GroupBox Grid.Column="3" Grid.Row="2" Header="Users" BorderThickness="1" BorderBrush="DimGray" Margin="5">
+            <Grid Grid.Row="2" Grid.Column="3" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition Width="20"></ColumnDefinition>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="20"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="1" Content="First Name"/>
+                <Label Grid.Row="2" Content="Second Name"/>
+                <Label Grid.Row="3" Content="Email"/>
+                <Label Grid.Row="4" Content="User Role"/>
+
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding UserFirstName}" Foreground="#FFB4B4B4" VerticalAlignment="Center" Height="18" MinWidth="100" Margin="3"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding UserLastName}" Foreground="#FFB4B4B4" VerticalAlignment="Center" Height="18" MinWidth="100" Margin="3"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding UserEmail}" Foreground="#FFB4B4B4" VerticalAlignment="Center" Height="18" MinWidth="100" Margin="3"/>
+                <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
+                    <RadioButton Content="Operator" cal:Message.Attach="[Event Checked] = [Action UserRoleSelector('Operator')]"
+                             VerticalAlignment="Center" FlowDirection="RightToLeft" Margin="5 0"></RadioButton>
+                    <RadioButton Content="User" IsChecked="True" cal:Message.Attach="[Event Checked] = [Action UserRoleSelector('User')]"
+                             VerticalAlignment="Center" FlowDirection="RightToLeft" Margin="5 0"></RadioButton>
+                </StackPanel>
+
+                <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal">
+                    <Button x:Name="AddUser" Content="Add User" Style="{DynamicResource ButtonStyle1}"/>
+                    <Button x:Name="EditSelectedUser" Content="Edit User" Style="{DynamicResource ButtonStyle1}"/>
+                    <Button x:Name="DeleteSelectedUser" Content="Delete User" Style="{DynamicResource ButtonStyle1}"/>
+                </StackPanel>
+
+                <ListView Grid.Row="1" Grid.Column="3" Grid.RowSpan="8" MinHeight="85" MinWidth="200" MaxHeight="250" cal:Message.Attach="[Event MouseDoubleClick] = [Action FillUserForm($this)]"
+                ItemsSource="{Binding UserList}"  SelectedIndex="{Binding SelectedUserIdx}" SelectedItem="{Binding SelectedUser}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding UserKey}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18"/>
+                                <TextBlock Text="   " Height="20"/>
+                                <TextBlock Text="{Binding FirstName}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
+                                <TextBlock Text="   " Height="20"/>
+                                <TextBlock Text="{Binding LastName}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
+                                <TextBlock Text="   " Height="20"/>
+                                <TextBlock Text="   " Height="20"/>
+                                <TextBlock Text="{Binding Email}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
+                                <TextBlock Text="   " Height="20"/>
+                                <TextBlock Text="{Binding UserRoleKey}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </GroupBox>
+
+        <!-- Selected User-->
+        <Label Grid.Row="1" Grid.Column="5" Content="Selected User" FontSize="18" FontWeight="Bold"/>
+        <GroupBox Grid.Column="5" Grid.Row="2" Header="SelectedUser" BorderThickness="1" BorderBrush="DimGray" Margin="5">
+            <Grid Grid.Row="2" Grid.Column="5" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                
+                <!-- SELECTED USER -->
+                <Border Grid.Row="1" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="1"/>
+
+                <Label Grid.Row="1" Grid.Column="0" Content="First Name" FontWeight="Bold"/>
+                <Label Grid.Row="2" Grid.Column="0" Content="Second Name" FontWeight="Bold"/>
+                <Label Grid.Row="3" Grid.Column="0" Content="Email" FontWeight="Bold"/>
+                <Label Grid.Row="4" Grid.Column="0" Content="UserKey" FontWeight="Bold"/>
+                <Label Grid.Row="5" Grid.Column="0" Content="UserType" FontWeight="Bold"/>
+                <Label Grid.Row="6" Grid.Column="0" Content="Group" FontWeight="Bold"/>
+
+                <Label Grid.Row="1" Grid.Column="1" Content="{Binding SelectedUser.FirstName}"/>
+                <Label Grid.Row="2" Grid.Column="1" Content="{Binding SelectedUser.LastName}"/>
+                <Label Grid.Row="3" Grid.Column="1" Content="{Binding SelectedUser.Email}"/>
+                <Label Grid.Row="4" Grid.Column="1" Content="{Binding SelectedUser.UserKey}"/>
+                <Label Grid.Row="5" Grid.Column="1" Content="{Binding SelectedUser.UserRoleKey}"/>
+                <Label Grid.Row="6" Grid.Column="1" Content="{Binding SelectedUser.GroupKey}"/>
+
+                <Border Grid.Row="1" Grid.Column="3" Grid.RowSpan="6" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="1"/>
+
+                <Label Grid.Row="1" Grid.Column="3" Content="Weekly order" FontWeight="Bold"/>
+                <Label Grid.Row="2" Grid.Column="3" Content="{Binding SelectedItemMonday.MenuName}"/>
+                <Label Grid.Row="3" Grid.Column="3" Content="{Binding SelectedItemTuesday.MenuName}"/>
+                <Label Grid.Row="4" Grid.Column="3" Content="{Binding SelectedItemWednesday.MenuName}"/>
+                <Label Grid.Row="5" Grid.Column="3" Content="{Binding SelectedItemThursday.MenuName}"/>
+                <Label Grid.Row="6" Grid.Column="3" Content="{Binding SelectedItemFriday.MenuName}"/>
+
+                <Label Grid.Row="1" Grid.Column="4" Content="Date Menu Key" FontWeight="Bold" />
+                <Label Grid.Row="2" Grid.Column="4" Content="{Binding SelectedDateMenuItemMonday.DateMenuKey}"/>
+                <Label Grid.Row="3" Grid.Column="4" Content="{Binding SelectedDateMenuItemTuesday.DateMenuKey}"/>
+                <Label Grid.Row="4" Grid.Column="4" Content="{Binding SelectedDateMenuItemWednesday.DateMenuKey}"/>
+                <Label Grid.Row="5" Grid.Column="4" Content="{Binding SelectedDateMenuItemThursday.DateMenuKey}"/>
+                <Label Grid.Row="6" Grid.Column="4" Content="{Binding SelectedDateMenuItemFriday.DateMenuKey}"/>
+
+                <Button Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="2" x:Name="SubmitOrder" Content="Submit Order" Style="{DynamicResource ButtonStyle1}"/>
+            </Grid>
+        </GroupBox>
         
         <!-- Weekly Menus -->
-        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Margin="0 10" >
-            <Label  Content="OPERATOR PANEL" FontSize="18" FontWeight="Bold"/>
-            <Label Content="Week #" VerticalAlignment="Center"/>
-            <Label  Content="{Binding CurrentWeek}" VerticalAlignment="Center"/>
-            <Button x:Name="PreviousWeek" Content="Previous Week" Margin="10 0"/>
-            <Button x:Name="NextWeek" Content="Next Week" Margin="10 0"/>
-        </StackPanel>
+        <GroupBox Grid.Row="3" Grid.Column="1"  Header="Operator panel" BorderThickness="1" BorderBrush="DimGray" Margin="5">
+            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" Margin="0 10" >
+                <Label  Content="OPERATOR PANEL" FontSize="18" FontWeight="Bold"/>
+                <Label Content="Week #" VerticalAlignment="Center"/>
+                <Label  Content="{Binding CurrentWeek}" VerticalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                <Button x:Name="PreviousWeek" Content="Prev"  Style="{DynamicResource ButtonStyle1}"/>
+                <Button x:Name="NextWeek" Content="Next" Style="{DynamicResource ButtonStyle1}"/>
+            </StackPanel>
+        </GroupBox>
         
         <!-- Operator Weekly Timetable -->
-        <Grid Grid.Row="3" Grid.Column="1" Background="LightGray" Visibility ="{Binding SelectedUserRoleKey, Converter={StaticResource RoleConverter}}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120" ></ColumnDefinition>
-                <ColumnDefinition Width="120" ></ColumnDefinition>
-                <ColumnDefinition Width="120" ></ColumnDefinition>
-                <ColumnDefinition Width="120" ></ColumnDefinition>
-                <ColumnDefinition Width="120" ></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
-            </Grid.RowDefinitions>
+        <GroupBox Grid.Row="4" Grid.Column="1"  Header="Menu selector" BorderThickness="1" BorderBrush="DimGray" Margin="5" >
+            <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" 
+                  Visibility ="{Binding SelectedUserRoleKey, Converter={StaticResource RoleConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120" ></ColumnDefinition>
+                    <ColumnDefinition Width="120" ></ColumnDefinition>
+                    <ColumnDefinition Width="120" ></ColumnDefinition>
+                    <ColumnDefinition Width="120" ></ColumnDefinition>
+                    <ColumnDefinition Width="120" ></ColumnDefinition>
+                </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Width="auto">
-                <Label  Content="Monday" />
-                <Label  Content="{Binding MondayDate, FallbackValue='Date'}" FontSize="8" VerticalAlignment="Center"/>
-            </StackPanel>
-            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Width="auto">
-                <Label  Content="Tuesday" />
-                <Label  Content="{Binding TuesdayDate, FallbackValue='Date'}" FontSize="8" VerticalAlignment="Center"/>
-            </StackPanel>
-            <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Width="auto">
-                <Label  Content="Wednesday" />
-                <Label  Content="{Binding WednesdayDate, FallbackValue='Date'}"  FontSize="8" VerticalAlignment="Center"/>
-            </StackPanel>
-            <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Horizontal" Width="auto">
-                <Label  Content="Thursday" />
-                <Label  Content="{Binding ThursdayDate, FallbackValue='Date'}" FontSize="8" VerticalAlignment="Center"/>
-            </StackPanel>
-            <StackPanel Grid.Row="0" Grid.Column="4" Orientation="Horizontal" Width="auto">
-                <Label  Content="Friday" />
-                <Label  Content="{Binding FridayDate, FallbackValue='Date'}" FontSize="8" VerticalAlignment="Center"/>
-            </StackPanel>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
 
+                <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Width="auto">
+                    <Label  Content="Monday" />
+                    <Label  Content="{Binding MondayDate, FallbackValue='Date'}" FontSize="8" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Width="auto">
+                    <Label  Content="Tuesday" />
+                    <Label  Content="{Binding TuesdayDate, FallbackValue='Date'}" FontSize="8" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Width="auto">
+                    <Label  Content="Wednesday" />
+                    <Label  Content="{Binding WednesdayDate, FallbackValue='Date'}"  FontSize="8" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Horizontal" Width="auto">
+                    <Label  Content="Thursday" />
+                    <Label  Content="{Binding ThursdayDate, FallbackValue='Date'}" FontSize="8" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="4" Orientation="Horizontal" Width="auto">
+                    <Label  Content="Friday" />
+                    <Label  Content="{Binding FridayDate, FallbackValue='Date'}" FontSize="8" VerticalAlignment="Center"/>
+                </StackPanel>
 
-            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
-                <ItemsControl ItemsSource="{Binding MenuList}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <ToggleButton Content="{Binding MenuName}"
+                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+                    <ItemsControl ItemsSource="{Binding MenuList}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ToggleButton Content="{Binding MenuName}"
                                 cal:Message.Attach="
                                     [Event Checked] = [Action MenuSelector($dataContext, 'Monday')];
                                     [Event Unchecked] = [Action MenuDeselector($dataContext, 'Monday')]
-                                    "> 
-                            </ToggleButton>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
+                                    ">
+                                </ToggleButton>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
 
-            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-                <ItemsControl ItemsSource="{Binding MenuList}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <ToggleButton Content="{Binding MenuName}" 
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                    <ItemsControl ItemsSource="{Binding MenuList}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ToggleButton Content="{Binding MenuName}" 
                                 cal:Message.Attach="
                                     [Event Checked] = [Action MenuSelector($dataContext, 'Tuesday')];
                                     [Event Unchecked] = [Action MenuDeselector($dataContext, 'Tuesday')]
                                     ">
-                            </ToggleButton>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
+                                </ToggleButton>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
 
-            <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
-                <ItemsControl ItemsSource="{Binding MenuList}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <ToggleButton Content="{Binding MenuName}" 
+                <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
+                    <ItemsControl ItemsSource="{Binding MenuList}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ToggleButton Content="{Binding MenuName}" 
                                 cal:Message.Attach="
                                     [Event Checked] = [Action MenuSelector($dataContext, 'Wednesday')];
                                     [Event Unchecked] = [Action MenuDeselector($dataContext, 'Wednesday')]
                                     ">
-                            </ToggleButton>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
+                                </ToggleButton>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
 
-            <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal">
-                <ItemsControl ItemsSource="{Binding MenuList}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <ToggleButton Content="{Binding MenuName}" 
+                <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Horizontal">
+                    <ItemsControl ItemsSource="{Binding MenuList}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ToggleButton Content="{Binding MenuName}" 
                                 cal:Message.Attach="
                                     [Event Checked] = [Action MenuSelector($dataContext, 'Thursday')];
                                     [Event Unchecked] = [Action MenuDeselector($dataContext, 'Thursday')]
                                     ">
-                            </ToggleButton>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
+                                </ToggleButton>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
 
-            <StackPanel Grid.Row="1" Grid.Column="4" Orientation="Horizontal">
-                <ItemsControl ItemsSource="{Binding MenuList}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <ToggleButton Content="{Binding MenuName}" 
+                <StackPanel Grid.Row="1" Grid.Column="4" Orientation="Horizontal">
+                    <ItemsControl ItemsSource="{Binding MenuList}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ToggleButton Content="{Binding MenuName}" 
                                 cal:Message.Attach="
                                     [Event Checked] = [Action MenuSelector($dataContext, 'Friday')];
                                     [Event Unchecked] = [Action MenuDeselector($dataContext, 'Friday')]
                                     ">
-                            </ToggleButton>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-            
-        </Grid>
+                                </ToggleButton>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+            </Grid>
+        </GroupBox>
         
         <!-- User Panel Weekly Timetable-->
-        <Label Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="5" Content="USER PANEL" Margin="0 10" FontSize="18" FontWeight="Bold"/>
-        <Grid Grid.Row="3" Grid.Column="3" Background="LightGray">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"  ></ColumnDefinition>
-                <ColumnDefinition Width="auto" ></ColumnDefinition>
-                <ColumnDefinition Width="auto" ></ColumnDefinition>
-                <ColumnDefinition Width="auto" ></ColumnDefinition>
-                <ColumnDefinition Width="auto" ></ColumnDefinition>
-                <ColumnDefinition Width="*" ></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+        <GroupBox Grid.Row="3" Grid.Column="3"  Header="User panel" BorderThickness="1" BorderBrush="DimGray" Margin="5" >
+            <Label Grid.Row="3" Grid.Column="3" Content="USER PANEL" Margin="0 10" FontSize="18" FontWeight="Bold" />
+        </GroupBox>
+        <GroupBox Grid.Row="4" Grid.Column="3"  Header="User menu selector" BorderThickness="1" BorderBrush="DimGray" Margin="5" Grid.ColumnSpan="4">
+            <Grid Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="3" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250"  ></ColumnDefinition>
+                    <ColumnDefinition Width="250" ></ColumnDefinition>
+                    <ColumnDefinition Width="250" ></ColumnDefinition>
+                    <ColumnDefinition Width="250" ></ColumnDefinition>
+                    <ColumnDefinition Width="250" ></ColumnDefinition>
+                </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" ></RowDefinition>
-                <RowDefinition Height="300"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
-                <RowDefinition Height="auto"></RowDefinition>
-            </Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" ></RowDefinition>
+                    <RowDefinition Height="300"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
 
-            <DataGrid Grid.Row="1" x:Name="MondayMenu" SelectedValue="{Binding SelectedMenuMonday}" 
+                <DataGrid Grid.Row="1" x:Name="MondayMenu" SelectedValue="{Binding SelectedMenuMonday}" 
                       cal:Message.Attach="[Event SelectionChanged] = [Action UserSelectMenu($this, 'Monday')]"
                       AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" 
-                      CanUserResizeColumns="False" CanUserResizeRows="False">
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Monday"  >
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Path=MenuName}" FontSize="14" />
-                                    <TextBlock Text="{Binding Path=Description}" FontStyle="Italic" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
+                      CanUserResizeColumns="False" CanUserResizeRows="False" ColumnWidth="240">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Monday"  >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Path=MenuName}" FontSize="14" />
+                                        <TextBlock Text="{Binding Path=Description}" FontStyle="Italic" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
 
-            <DataGrid Grid.Row="1" Grid.Column="1" x:Name="TuesdayMenu" SelectedItem="{Binding SelectedMenuTuesday}"
+                <DataGrid Grid.Row="1" Grid.Column="1" x:Name="TuesdayMenu" SelectedItem="{Binding SelectedMenuTuesday}"
                       cal:Message.Attach="[Event SelectionChanged] = [Action UserSelectMenu($this, 'Tuesday')]"
                       AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" 
-                      CanUserResizeColumns="False" CanUserResizeRows="False">
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Tuesday"  >
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Path=MenuName}" FontSize="14" />
-                                    <TextBlock Text="{Binding Path=Description}" FontStyle="Italic" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
+                      CanUserResizeColumns="False" CanUserResizeRows="False" ColumnWidth="240">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Tuesday">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Path=MenuName}" FontSize="14" />
+                                        <TextBlock Text="{Binding Path=Description}" FontStyle="Italic" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
 
-            <DataGrid Grid.Row="1" Grid.Column="2" x:Name="WednesdayMenu" SelectedItem="{Binding SelectedMenuWednesday}"
+                <DataGrid Grid.Row="1" Grid.Column="2" x:Name="WednesdayMenu" SelectedItem="{Binding SelectedMenuWednesday}"
                       cal:Message.Attach="[Event SelectionChanged] = [Action UserSelectMenu($this, 'Wednesday')]"
                       AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False"
-                      CanUserResizeColumns="False" CanUserResizeRows="False">
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Wednesday"  >
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Path=MenuName}" FontSize="14" />
-                                    <TextBlock Text="{Binding Path=Description}" FontStyle="Italic" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
+                      CanUserResizeColumns="False" CanUserResizeRows="False" ColumnWidth="240">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Wednesday"  >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Path=MenuName}" FontSize="14" />
+                                        <TextBlock Text="{Binding Path=Description}" FontStyle="Italic" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
 
-            <DataGrid Grid.Row="1" Grid.Column="3" x:Name="ThursdayMenu" SelectedItem="{Binding SelectedMenuThursday}"
+                <DataGrid Grid.Row="1" Grid.Column="3" x:Name="ThursdayMenu" SelectedItem="{Binding SelectedMenuThursday}"
                       cal:Message.Attach="[Event SelectionChanged] = [Action UserSelectMenu($this, 'Thursday')]"
                       AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" 
-                      CanUserResizeColumns="False" CanUserResizeRows="False">
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Thursday"  >
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Path=MenuName}" FontSize="14" />
-                                    <TextBlock Text="{Binding Path=Description}" FontStyle="Italic" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
+                      CanUserResizeColumns="False" CanUserResizeRows="False" ColumnWidth="240">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Thursday"  >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Path=MenuName}" FontSize="14" />
+                                        <TextBlock Text="{Binding Path=Description}" FontStyle="Italic" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
 
-            <DataGrid Grid.Row="1" Grid.Column="4" x:Name="FridayMenu" SelectedItem="{Binding SelectedMenuFriday}"
+                <DataGrid Grid.Row="1" Grid.Column="4" x:Name="FridayMenu" SelectedItem="{Binding SelectedMenuFriday}"
                       cal:Message.Attach="[Event SelectionChanged] = [Action UserSelectMenu($this, 'Friday')]"
                       AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" 
-                      CanUserResizeColumns="False" CanUserResizeRows="False">
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Friday" >
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Path=MenuName}" FontSize="14" />
-                                    <TextBlock Text="{Binding Path=Description}" FontStyle="Italic" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-
-            <!--<ListBox Grid.Row="2" ItemsSource="{Binding MondayMenu}" SelectedItem="{Binding SelectedItem}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <RadioButton Content="{Binding MenuName}" GroupName="Properties" >
-                            <RadioButton.IsChecked>
-                                <Binding Path="IsSelected"
-                             RelativeSource="{RelativeSource AncestorType=ListBoxItem}"
-                             Mode="TwoWay" />
-                            </RadioButton.IsChecked>
-                        </RadioButton>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-            <Button x:Name="DateButton" Content="Date Button" Grid.Column="0" Grid.Row="3" />-->
-
-        </Grid>
+                      CanUserResizeColumns="False" CanUserResizeRows="False" ColumnWidth="240">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Friday" >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Path=MenuName}" FontSize="14" />
+                                        <TextBlock Text="{Binding Path=Description}" FontStyle="Italic" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
         
         <!-- ORDERS -->
-        <Label Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="5" Content="ORDERS" Margin="0 10" FontSize="18" FontWeight="Bold"/>
-        <Grid Grid.Row="5" Grid.Column="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-            </Grid.RowDefinitions>
+        <GroupBox Grid.Row="5" Grid.Column="1"  Header="Orders" BorderThickness="1" BorderBrush="DimGray" Margin="5" >
+            <Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="5" Content="ORDERS" Margin="0 10" FontSize="18" FontWeight="Bold"/>
+        </GroupBox>
+        <GroupBox Grid.Row="6" Grid.Column="1"  Header="Order selection" BorderThickness="1" BorderBrush="DimGray" Margin="5" >
+            <Grid Grid.Row="6" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
 
                 <Label Grid.Row="0" Grid.Column="0" Content="Selected Day" />
-            <DatePicker Grid.Row="0" Grid.Column="1" x:Name="SelectedDateOrder" Width="100" ></DatePicker>
-                <Button  Grid.Row="0" Grid.Column="2" x:Name="GetOrdersByDay" Content="Search by Day" Margin="5"/>
+                <DatePicker Grid.Row="0" Grid.Column="1" x:Name="SelectedDateOrder" Width="120" ></DatePicker>
+                <Button  Grid.Row="0" Grid.Column="2" x:Name="GetOrdersByDay" Content="Search by Day" Style="{DynamicResource ButtonStyle1}"/>
                 <Label Grid.Row="1" Grid.Column="0" Content="Selected Week" />
-                <TextBox  Grid.Row="1" Grid.Column="1" x:Name="ChosenWeek" Width="100" Margin="5"></TextBox>
-                <Button  Grid.Row="1" Grid.Column="2" x:Name="GetOrdersByWeek" Content="Search by Week" Margin="5"/>
+                <TextBox  Grid.Row="1" Grid.Column="1" x:Name="ChosenWeek" Width="120" Margin="2"></TextBox>
+                <Button  Grid.Row="1" Grid.Column="2" x:Name="GetOrdersByWeek" Content="Search by Week" Style="{DynamicResource ButtonStyle1}"/>
                 <Label  Grid.Row="2" Grid.Column="0" Content="Selected Month" />
-                <TextBox  Grid.Row="2" Grid.Column="1" x:Name="ChosenMonth" Width="100" Margin="5"></TextBox>
-                <Button  Grid.Row="2" Grid.Column="2" x:Name="GetOrdersByMonth" Content="Search by Month" Margin="5"/>
+                <TextBox  Grid.Row="2" Grid.Column="1" x:Name="ChosenMonth" Width="120" Margin="2"></TextBox>
+                <Button  Grid.Row="2" Grid.Column="2" x:Name="GetOrdersByMonth" Content="Search by Month" Style="{DynamicResource ButtonStyle1}"/>
 
-            <DataGrid Grid.Row="3" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="5" MinHeight="200" MinWidth="200" Height="350" Margin="5"
+                <DataGrid Grid.Row="3" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="3" Margin="5" Height="300"
                 ItemsSource="{Binding OrderModelJoinedList}"  SelectedIndex="{Binding SelectedOrderIdx}" SelectedItem="{Binding SelectedOrder}"
                 CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" IsReadOnly="True">
-                      
-                
-                <!--<DataGrid.Columns.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding OrderKey}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18"/>
-                            <TextBlock Text="   " Height="20"/>
-                            <TextBlock Text="{Binding Date}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18"/>
-                            <TextBlock Text="   " Height="20"/>
-                            <TextBlock Text="{Binding FirstName}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
-                            <TextBlock Text="   " Height="20"/>
-                            <TextBlock Text="{Binding LastName}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
-                            <TextBlock Text="   " Height="20"/>
-                            <TextBlock Text="{Binding MenuName}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
-                            <TextBlock Text="   " Height="20"/>
-                            <TextBlock Text="{Binding OrderStatusName}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
-                            <TextBlock Text="   " Height="20"/>
-                            <TextBlock Text="{Binding Comment}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </DataGrid.Columns.ItemTemplate>-->
-            </DataGrid>
-        </Grid>
-
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+        
         <!-- EDIT ORDERS -->
-        <Label Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="5" Content="EDIT ORDERS" Margin="0 10" FontSize="18" FontWeight="Bold"/>
-        <Grid Grid.Row="5" Grid.Column="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
+        <GroupBox Grid.Row="5" Grid.Column="3"  Header="Edit orders" BorderThickness="1" BorderBrush="DimGray" Margin="5" >
+            <Label Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="5" Content="EDIT ORDERS" Margin="0 10" FontSize="18" FontWeight="Bold"/>
+        </GroupBox>
+        <GroupBox Grid.Row="6" Grid.Column="3"  Header="Selected order" BorderThickness="1" BorderBrush="DimGray" Margin="5" >
+            <Grid Grid.Row="6" Grid.Column="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0" Content="Order Name:"/>
-            <Label Grid.Row="1" Grid.Column="0" Content="Order Key:"/>
-            <Label Grid.Row="2" Grid.Column="0" Content="User First Name:"/>
-            <Label Grid.Row="3" Grid.Column="0" Content="User Last Name:"/>
-            <Label Grid.Row="4" Grid.Column="0" Content="Comment:"/>
+                <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="1"/>
 
-            <Label Grid.Row="0" Grid.Column="1" Content="{Binding SelectedOrder.MenuName}"/>
-            <Label Grid.Row="1" Grid.Column="1"  Content="{Binding SelectedOrder.OrderKey}"/>
-            <Label Grid.Row="2" Grid.Column="1"  Content="{Binding SelectedOrder.FirstName}"/>
-            <Label Grid.Row="3" Grid.Column="1"  Content="{Binding SelectedOrder.LastName}"/>
-            <Label Grid.Row="4" Grid.Column="1"  Content="{Binding SelectedOrder.Comment}"/>
+                <Label Grid.Row="0" Grid.Column="0" Content="Order Name:" FontWeight="Bold"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="Order Key:" FontWeight="Bold"/>
+                <Label Grid.Row="2" Grid.Column="0" Content="User First Name:" FontWeight="Bold"/>
+                <Label Grid.Row="3" Grid.Column="0" Content="User Last Name:" FontWeight="Bold"/>
+                <Label Grid.Row="4" Grid.Column="0" Content="Comment:" FontWeight="Bold"/>
 
 
-            <Label Grid.Row="6" FontWeight="Bold" Content="Edit Order" />
-            <Label Grid.Row="7" Grid.Column="0" Content="Enter Order Comment" />
-            <TextBox Grid.Row="7" Grid.Column="1" x:Name="OrderComment" MinWidth="75"  Margin="5"/>
-            <Label Grid.Row="8" Grid.Column="0" Content="Enter new order menu key" />
-            <TextBox Grid.Row="8" Grid.Column="1" x:Name="NewOrderMenuKey" MinWidth="75"  Margin="5"/>
-            <Button Grid.Row="9" Grid.Column="0" Visibility ="{Binding SelectedUserRoleKey, Converter={StaticResource RoleConverter}}"
-                    x:Name="EditSelectedOrderByKey" Content="Edit Order" Margin="5"/>
-        </Grid>
+                <Label Grid.Row="0" Grid.Column="1" Content="{Binding SelectedOrder.MenuName}"/>
+                <Label Grid.Row="1" Grid.Column="1"  Content="{Binding SelectedOrder.OrderKey}"/>
+                <Label Grid.Row="2" Grid.Column="1"  Content="{Binding SelectedOrder.FirstName}"/>
+                <Label Grid.Row="3" Grid.Column="1"  Content="{Binding SelectedOrder.LastName}"/>
+                <Label Grid.Row="4" Grid.Column="1"  Content="{Binding SelectedOrder.Comment}"/>
 
+                <Border Grid.Row="6" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="1"/>
+
+                <Label Grid.Row="6" FontWeight="Bold" Content="Edit Order" />
+                <Label Grid.Row="7" Grid.Column="0" Content="Enter Order Comment" />
+                <TextBox Grid.Row="7" Grid.Column="1" x:Name="OrderComment" MinWidth="75"  Margin="5"/>
+                <Label Grid.Row="8" Grid.Column="0" Content="Enter new order menu key" />
+                <TextBox Grid.Row="8" Grid.Column="1" x:Name="NewOrderMenuKey" MinWidth="75"  Margin="5"/>
+                <Button Grid.Row="10" Grid.Column="0" Visibility ="{Binding SelectedUserRoleKey, Converter={StaticResource RoleConverter}}"
+                    Grid.ColumnSpan="2"
+                        x:Name="EditSelectedOrderByKey" Content="Edit Order" Style="{DynamicResource ButtonStyle1}"/>
+            </Grid>
+        </GroupBox>
     </Grid>
 
    

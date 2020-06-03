@@ -36,6 +36,9 @@ EDIT ORDERS
 
 Here selected order will be shown with its properties. On the bottom you can edit selected orders add comment and new Menu Key TO-DO: Dropdown menu or more suitable selection option. Edit button only appears if a user with Operator Key is selected.
 
+DATABASE
+
+Database connection string is in App.config, connectionString - Server
 
 TO-DOs:
 

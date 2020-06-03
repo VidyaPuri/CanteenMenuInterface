@@ -38,6 +38,8 @@ Here selected order will be shown with its properties. On the bottom you can edi
 
 
 TO-DOs:
+
 -Improve UI
+
 -User Role options set in backend (not just hidding UI controls)
 

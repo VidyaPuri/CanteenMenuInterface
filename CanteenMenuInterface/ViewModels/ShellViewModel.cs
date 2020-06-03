@@ -810,7 +810,7 @@ namespace CanteenMenuInterface.ViewModels
         /// </summary>
         public void GetOrdersByMonth()
         {
-            if (ChosenMonth < 1 && ChosenMonth > 12)
+            if (ChosenMonth < 1 || ChosenMonth > 12)
                 return;
             var firstDayOfMonth = new DateTime(2020, ChosenMonth, 1);
             var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);

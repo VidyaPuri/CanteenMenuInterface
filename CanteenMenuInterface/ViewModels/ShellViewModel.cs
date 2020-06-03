@@ -14,16 +14,13 @@ namespace CanteenMenuInterface.ViewModels
     public class ShellViewModel : Screen
     {
         #region Window Control
+        //public bool myCondition { get { return (false); } }
 
-        private WindowState windowState;
+        private WindowState _WindowState;
         public WindowState WindowState
         {
-            get { return windowState; }
-            set
-            {
-                windowState = value;
-                NotifyOfPropertyChange(() => WindowState);
-            }
+            get { return _WindowState; }
+            set => Set(ref _WindowState, value);
         }
 
         public void MaximizeWindow()
@@ -38,8 +35,6 @@ namespace CanteenMenuInterface.ViewModels
         {
             WindowState = WindowState.Minimized;
         }
-
-        public bool myCondition { get { return (false); } }
 
         public void CloseWindow()
         {

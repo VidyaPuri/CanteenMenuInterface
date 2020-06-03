@@ -22,6 +22,7 @@
     
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="10"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
@@ -42,14 +43,49 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="10"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        
-        <Border Grid.Row="1" Grid.Column="1" Grid.RowSpan="7" Grid.ColumnSpan="7" BorderBrush="Black" BorderThickness="1"/>
+
+        <!-- Window Control-->
+        <Grid Grid.Row="0" Grid.ColumnSpan="8" Background="#466874">
+            <Label Content="Canteen Menu Selector" Margin="5 0" FontWeight="Bold" FontSize="13" Foreground="Gainsboro"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" WindowChrome.IsHitTestVisibleInChrome="True">
+                <Button x:Name="MinimizeWindow" Height="30" Width="30" Style="{DynamicResource WindowControllButtons}">
+                    <Image Source="Styles/Icons/Minimize.png" Width="15"/>
+                </Button>
+
+                <ToggleButton x:Name="MaximizeWindow" Height="30" Width="30" Template="{DynamicResource UnMaksimize_Maximize_Button}">
+                    <ToggleButton.Resources>
+                        <DataTemplate x:Key="Unpressed">
+                            <Image Source="Styles/Icons/Maksimize.png" Width="15"/>
+                        </DataTemplate>
+                        <DataTemplate x:Key="Pressed">
+                            <Image Source="Styles/Icons/UnMaksimize.png" Width="15"/>
+                        </DataTemplate>
+                    </ToggleButton.Resources>
+                    <ToggleButton.Style>
+                        <Style TargetType="{x:Type ToggleButton}">
+                            <Setter Property="ContentTemplate" Value="{StaticResource Unpressed}"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter Property="ContentTemplate" Value="{StaticResource Pressed}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ToggleButton.Style>
+                </ToggleButton>
+
+                <Button x:Name="CloseWindow" Height="30" Width="30" Style="{DynamicResource WindowControllButtons}">
+                    <Image Source="Styles/Icons/Close.png" Width="15"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <Border Grid.Row="2" Grid.Column="1" Grid.RowSpan="7" Grid.ColumnSpan="6" BorderBrush="Black" BorderThickness="1"/>
 
         <!-- Menus -->
-        <Label Grid.Row="1" Grid.Column="1" Content="Menu" FontSize="18" FontWeight="Bold" />
+        <Label Grid.Row="2" Grid.Column="1" Content="Menu" FontSize="18" FontWeight="Bold" />
 
-        <GroupBox Grid.Row="2" Grid.Column="1"  Header="Menu" BorderThickness="1" BorderBrush="DimGray" Margin="5">
-            <Grid Grid.Row="2" Grid.Column="1" Margin="5"  >
+        <GroupBox Grid.Row="3" Grid.Column="1"  Header="Menu" BorderThickness="1" BorderBrush="DimGray" Margin="5">
+            <Grid Grid.Row="3" Grid.Column="1" Margin="5"  >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="140"></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -105,9 +141,9 @@
         </GroupBox>
 
         <!-- Users-->
-        <Label Grid.Row="1" Grid.Column="3" Content="Users" FontSize="18" FontWeight="Bold"/>
-        <GroupBox Grid.Column="3" Grid.Row="2" Header="Users" BorderThickness="1" BorderBrush="DimGray" Margin="5">
-            <Grid Grid.Row="2" Grid.Column="3" Margin="5">
+        <Label Grid.Row="2" Grid.Column="3" Content="Users" FontSize="18" FontWeight="Bold"/>
+        <GroupBox Grid.Row="3" Grid.Column="3"  Header="Users" BorderThickness="1" BorderBrush="DimGray" Margin="5">
+            <Grid Grid.Row="3" Grid.Column="3" Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"></ColumnDefinition>
                     <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -172,9 +208,9 @@
         </GroupBox>
 
         <!-- Selected User-->
-        <Label Grid.Row="1" Grid.Column="5" Content="Selected User" FontSize="18" FontWeight="Bold"/>
-        <GroupBox Grid.Column="5" Grid.Row="2" Header="SelectedUser" BorderThickness="1" BorderBrush="DimGray" Margin="5">
-            <Grid Grid.Row="2" Grid.Column="5" Margin="5">
+        <Label Grid.Row="2" Grid.Column="5" Content="Selected User" FontSize="18" FontWeight="Bold"/>
+        <GroupBox Grid.Row="3" Grid.Column="5"  Header="SelectedUser" BorderThickness="1" BorderBrush="DimGray" Margin="5">
+            <Grid Grid.Row="3" Grid.Column="5" Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="120"/>
@@ -233,8 +269,8 @@
         </GroupBox>
         
         <!-- Weekly Menus -->
-        <GroupBox Grid.Row="3" Grid.Column="1"  Header="Operator panel" BorderThickness="1" BorderBrush="DimGray" Margin="5">
-            <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" Margin="0 10" >
+        <GroupBox Grid.Row="4" Grid.Column="1"  Header="Operator panel" BorderThickness="1" BorderBrush="DimGray" Margin="5">
+            <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal" Margin="0 10" >
                 <Label  Content="OPERATOR PANEL" FontSize="18" FontWeight="Bold"/>
                 <Label Content="Week #" VerticalAlignment="Center"/>
                 <Label  Content="{Binding CurrentWeek}" VerticalAlignment="Center" FontWeight="Bold" FontSize="14"/>
@@ -244,8 +280,8 @@
         </GroupBox>
         
         <!-- Operator Weekly Timetable -->
-        <GroupBox Grid.Row="4" Grid.Column="1"  Header="Menu selector" BorderThickness="1" BorderBrush="DimGray" Margin="5" >
-            <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" 
+        <GroupBox Grid.Row="5" Grid.Column="1"  Header="Menu selector" BorderThickness="1" BorderBrush="DimGray" Margin="5" >
+            <Grid Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" 
                   Visibility ="{Binding SelectedUserRoleKey, Converter={StaticResource RoleConverter}}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120" ></ColumnDefinition>
@@ -362,11 +398,11 @@
         </GroupBox>
         
         <!-- User Panel Weekly Timetable-->
-        <GroupBox Grid.Row="3" Grid.Column="3"  Header="User panel" BorderThickness="1" BorderBrush="DimGray" Margin="5" >
-            <Label Grid.Row="3" Grid.Column="3" Content="USER PANEL" Margin="0 10" FontSize="18" FontWeight="Bold" />
+        <GroupBox Grid.Row="4" Grid.Column="3"  Header="User panel" BorderThickness="1" BorderBrush="DimGray" Margin="5" >
+            <Label Grid.Row="4" Grid.Column="3" Content="USER PANEL" Margin="0 10" FontSize="18" FontWeight="Bold" />
         </GroupBox>
-        <GroupBox Grid.Row="4" Grid.Column="3"  Header="User menu selector" BorderThickness="1" BorderBrush="DimGray" Margin="5" Grid.ColumnSpan="4">
-            <Grid Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="3" >
+        <GroupBox Grid.Row="5" Grid.Column="3"  Header="User menu selector" BorderThickness="1" BorderBrush="DimGray" Margin="5" Grid.ColumnSpan="4">
+            <Grid Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="250"  ></ColumnDefinition>
                     <ColumnDefinition Width="250" ></ColumnDefinition>
@@ -475,11 +511,11 @@
         </GroupBox>
         
         <!-- ORDERS -->
-        <GroupBox Grid.Row="5" Grid.Column="1"  Header="Orders" BorderThickness="1" BorderBrush="DimGray" Margin="5" >
-            <Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="5" Content="ORDERS" Margin="0 10" FontSize="18" FontWeight="Bold"/>
+        <GroupBox Grid.Row="6" Grid.Column="1"  Header="Orders" BorderThickness="1" BorderBrush="DimGray" Margin="5" >
+            <Label Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="5" Content="ORDERS" Margin="0 10" FontSize="18" FontWeight="Bold"/>
         </GroupBox>
-        <GroupBox Grid.Row="6" Grid.Column="1"  Header="Order selection" BorderThickness="1" BorderBrush="DimGray" Margin="5" >
-            <Grid Grid.Row="6" Grid.Column="1">
+        <GroupBox Grid.Row="7" Grid.Column="1"  Header="Order selection" BorderThickness="1" BorderBrush="DimGray" Margin="5" >
+            <Grid Grid.Row="7" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="150"/>
@@ -510,11 +546,11 @@
         </GroupBox>
         
         <!-- EDIT ORDERS -->
-        <GroupBox Grid.Row="5" Grid.Column="3"  Header="Edit orders" BorderThickness="1" BorderBrush="DimGray" Margin="5" >
-            <Label Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="5" Content="EDIT ORDERS" Margin="0 10" FontSize="18" FontWeight="Bold"/>
+        <GroupBox Grid.Row="6" Grid.Column="3"  Header="Edit orders" BorderThickness="1" BorderBrush="DimGray" Margin="5" >
+            <Label Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="5" Content="EDIT ORDERS" Margin="0 10" FontSize="18" FontWeight="Bold"/>
         </GroupBox>
-        <GroupBox Grid.Row="6" Grid.Column="3"  Header="Selected order" BorderThickness="1" BorderBrush="DimGray" Margin="5" >
-            <Grid Grid.Row="6" Grid.Column="3">
+        <GroupBox Grid.Row="7" Grid.Column="3"  Header="Selected order" BorderThickness="1" BorderBrush="DimGray" Margin="5" >
+            <Grid Grid.Row="7" Grid.Column="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>

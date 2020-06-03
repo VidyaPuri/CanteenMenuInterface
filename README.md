@@ -34,4 +34,10 @@ TO-DO: Week and Month insert fields should be limited to (number of possible wee
 
 EDIT ORDERS
 
-Here selected order will be shown with its properties. On the bottom you can edit selected orders add comment and new Menu Key TO-DO: Dropdown menu or more suitable selection option
+Here selected order will be shown with its properties. On the bottom you can edit selected orders add comment and new Menu Key TO-DO: Dropdown menu or more suitable selection option. Edit button only appears if a user with Operator Key is selected.
+
+
+TO-DOs:
+-Improve UI
+-User Role options set in backend (not just hidding UI controls)
+

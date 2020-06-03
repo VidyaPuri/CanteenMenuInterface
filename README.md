@@ -1,6 +1,6 @@
 # CanteenMenuInterface
 
-The application is divided between sections, which should be (TO-DO) divided on seperate user controls.
+The application is divided between sections on one screen, which should be divided on seperate user controls (TO-DO)
 
 MENU 
 
@@ -19,7 +19,10 @@ here next to his data. With submit order, all the selected menus are added to da
 OPERATOR PANEL
 
 Here Operator can select which of the available menus are to be used on selected day. With previous and next week buttons we navigate
-through weeks. Buttons are toggle type. TO-DO - when you change week the status of toggle buttons should change acording to the status of 
+through weeks. Buttons are toggle type. There is a bug, if you try to de-toggle previously selected menu from which orders were made
+(you cant change how menu should be, for days that are already gone ... )
+
+TO-DO - when you change week the status of toggle buttons should change acording to the status of 
 each meal at each day. TO-DO2 - limit max\min number of possible menus per day.
 
 USER PANEL

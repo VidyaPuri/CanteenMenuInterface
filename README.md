@@ -30,3 +30,4 @@ TO-DO - better visualisation
 ORDERS
 
 Here we can look for orders by day, week or month. The displayed properties are Date, FirstName, LastName, MenuName and OrderStatusName
+TO-DO: Week and Month insert fields should be limited to (number of possible weeks and number of possible months/dropdown menu with months)

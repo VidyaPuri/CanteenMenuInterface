@@ -28,7 +28,6 @@ namespace CanteenMenuInterface.ViewModels
 
         #endregion
 
-
         #region MENUS
 
         #region Menu Properties
@@ -203,8 +202,8 @@ namespace CanteenMenuInterface.ViewModels
             set
             {
                 _SelectedUser = value;
-                SelectedUserRoleKey = SelectedUser.UserRoleKey;
                 NotifyOfPropertyChange(() => SelectedUser);
+                SelectedUserRoleKey = SelectedUser.UserRoleKey;
             }
         }
 
@@ -252,9 +251,16 @@ namespace CanteenMenuInterface.ViewModels
         /// </summary>
         public void EditSelectedUser()
         {
-            if (SelectedUser != null)
-                db.EditUser(SelectedUser.UserKey, UserFirstName, UserLastName, UserEmail, UserRoleKey);
-            ShowUsers();
+            try
+            {
+                if (SelectedUser != null)
+                    db.EditUser(SelectedUser.UserKey, UserFirstName, UserLastName, UserEmail, UserRoleKey);
+                ShowUsers();
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
 
         /// <summary>
@@ -352,7 +358,6 @@ namespace CanteenMenuInterface.ViewModels
         private DateMenuModel _SelectedDateMenuItemWednesday;
         private DateMenuModel _SelectedDateMenuItemThursday;
         private DateMenuModel _SelectedDateMenuItemFriday;
-
 
         public DateMenuModel SelectedDateMenuItemMonday
         {
@@ -697,6 +702,10 @@ namespace CanteenMenuInterface.ViewModels
         private List<OrderModelJoined> _OrderModelJoinedList;
         private int _ChosenWeek; 
         private int _ChosenMonth;
+        private OrderModelJoined _SelectedOrder;
+        private string _OrderComment = "";
+        private int _NewOrderMenuKey;
+
 
         public List<OrderModel> OrderModelList
         {
@@ -725,6 +734,24 @@ namespace CanteenMenuInterface.ViewModels
         {
             get { return _ChosenMonth; }
             set => Set(ref _ChosenMonth, value);
+        }
+
+        public OrderModelJoined SelectedOrder
+        {
+            get { return _SelectedOrder; }
+            set => Set(ref _SelectedOrder, value);
+        }
+
+        public string OrderComment
+        {
+            get { return _OrderComment; }
+            set => Set(ref _OrderComment, value);
+        }
+
+        public int NewOrderMenuKey
+        {
+            get { return _NewOrderMenuKey; }
+            set => Set(ref _NewOrderMenuKey, value);
         }
 
 
@@ -765,14 +792,17 @@ namespace CanteenMenuInterface.ViewModels
             OrderModelJoinedList =  db.GetOrdersByDay(SelectedDateOrder);
         }
 
+        /// TO-DO Clean this Date mess 
         /// <summary>
         /// Gets the Orders by selected week
         /// </summary>
         public void GetOrdersByWeek()
         {
+            if (ChosenWeek < 1 && ChosenWeek > 52)
+                return;
             DateTime dt1 = DateHelper.GetDateFromWeekNumberAndDayOfWeek(ChosenWeek, 0);
             DateTime dt2 = dt1.AddDays(6);
-            OrderModelJoinedList = db.GetOrdersByWeek(dt1, dt2);
+            OrderModelJoinedList = db.GetOrdersByTwoDays(dt1, dt2);
         }
 
         /// <summary>
@@ -780,11 +810,28 @@ namespace CanteenMenuInterface.ViewModels
         /// </summary>
         public void GetOrdersByMonth()
         {
+            if (ChosenMonth < 1 && ChosenMonth > 12)
+                return;
             var firstDayOfMonth = new DateTime(2020, ChosenMonth, 1);
             var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
             DateTime dt1 = firstDayOfMonth;
             DateTime dt2 = lastDayOfMonth;
-            OrderModelJoinedList = db.GetOrdersByWeek(dt1, dt2);
+            OrderModelJoinedList = db.GetOrdersByTwoDays(dt1, dt2);
+        }
+
+        /// <summary>
+        /// Edits the selected order
+        /// </summary>
+        public void EditSelectedOrderByKey()
+        {
+            try
+            {
+                db.EditOrderByKey(SelectedOrder.OrderKey, NewOrderMenuKey, OrderComment);
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
         }
 
         #endregion

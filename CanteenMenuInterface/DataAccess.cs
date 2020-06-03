@@ -300,11 +300,11 @@ namespace CanteenMenuInterface
         /// Return the list of all Orders between two days (one week)
         /// </summary>
         /// <returns></returns>
-        public List<OrderModelJoined> GetOrdersByWeek(DateTime date1, DateTime date2)
+        public List<OrderModelJoined> GetOrdersByTwoDays(DateTime date1, DateTime date2)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
             {
-                var output = connection.Query<OrderModelJoined>("dbo.OrderViewByWeek @Date1, @Date2", new { Date1 = date1, Date2 = date2 }).ToList();
+                var output = connection.Query<OrderModelJoined>("dbo.OrderViewByTwoDays @Date1, @Date2", new { Date1 = date1, Date2 = date2 }).ToList();
 
                 return output;
             }
@@ -354,7 +354,23 @@ namespace CanteenMenuInterface
             }
         }
 
+        /// <summary>
+        /// Edits Order at Order ID 
+        /// </summary> 
+        public void EditOrderByKey(int orderKey, int menuKey, string comment)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConnectionStringHelper.CnnVal("CanteenMenuDB")))
+            {
+                OrderEditModel orderEditModel = new OrderEditModel
+                {
+                    OrderKey = orderKey,
+                    MenuKey = menuKey,
+                    Comment = comment
+                };
 
+                connection.Execute("dbo.OrderEditByKey @OrderKey, @MenuKey, @Comment", orderEditModel);
+            }
+        }
 
         #endregion
 

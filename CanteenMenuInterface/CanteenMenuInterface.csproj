@@ -78,6 +78,7 @@
     <Compile Include="Helpers\DateHelper.cs" />
     <Compile Include="Models\DateMenuModel.cs" />
     <Compile Include="Models\MenuModel.cs" />
+    <Compile Include="Models\OrderEditModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Models\OrderModelJoined.cs" />
     <Compile Include="Models\UserModel.cs" />

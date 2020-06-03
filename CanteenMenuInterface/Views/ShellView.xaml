@@ -443,9 +443,9 @@
             <Button x:Name="DateButton" Content="Date Button" Grid.Column="0" Grid.Row="3" />-->
 
         </Grid>
-
+        
+        <!-- ORDERS -->
         <Label Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="5" Content="ORDERS" Margin="0 10" FontSize="18" FontWeight="Bold"/>
-
         <Grid Grid.Row="5" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
@@ -469,11 +469,16 @@
                 <TextBox  Grid.Row="2" Grid.Column="1" x:Name="ChosenMonth" Width="100" Margin="5"></TextBox>
                 <Button  Grid.Row="2" Grid.Column="2" x:Name="GetOrdersByMonth" Content="Search by Month" Margin="5"/>
 
-            <ListView Grid.Row="3" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="5" MinHeight="200" MinWidth="200" Height="350" Margin="5"
-                ItemsSource="{Binding OrderModelJoinedList}"  SelectedIndex="{Binding SelectedOrderIdx}" SelectedItem="{Binding SelectedOrder}">
-                <ListView.ItemTemplate>
+            <DataGrid Grid.Row="3" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="5" MinHeight="200" MinWidth="200" Height="350" Margin="5"
+                ItemsSource="{Binding OrderModelJoinedList}"  SelectedIndex="{Binding SelectedOrderIdx}" SelectedItem="{Binding SelectedOrder}"
+                CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" IsReadOnly="True">
+                      
+                
+                <!--<DataGrid.Columns.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding OrderKey}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18"/>
+                            <TextBlock Text="   " Height="20"/>
                             <TextBlock Text="{Binding Date}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18"/>
                             <TextBlock Text="   " Height="20"/>
                             <TextBlock Text="{Binding FirstName}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
@@ -483,14 +488,57 @@
                             <TextBlock Text="{Binding MenuName}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
                             <TextBlock Text="   " Height="20"/>
                             <TextBlock Text="{Binding OrderStatusName}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
+                            <TextBlock Text="   " Height="20"/>
+                            <TextBlock Text="{Binding Comment}" Foreground="#FFB4B4B4" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Height="18" Width="auto"/>
                         </StackPanel>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </DataGrid.Columns.ItemTemplate>-->
+            </DataGrid>
         </Grid>
 
-    
-        
+        <!-- EDIT ORDERS -->
+        <Label Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="5" Content="EDIT ORDERS" Margin="0 10" FontSize="18" FontWeight="Bold"/>
+        <Grid Grid.Row="5" Grid.Column="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Content="Order Name:"/>
+            <Label Grid.Row="1" Grid.Column="0" Content="Order Key:"/>
+            <Label Grid.Row="2" Grid.Column="0" Content="User First Name:"/>
+            <Label Grid.Row="3" Grid.Column="0" Content="User Last Name:"/>
+            <Label Grid.Row="4" Grid.Column="0" Content="Comment:"/>
+
+            <Label Grid.Row="0" Grid.Column="1" Content="{Binding SelectedOrder.MenuName}"/>
+            <Label Grid.Row="1" Grid.Column="1"  Content="{Binding SelectedOrder.OrderKey}"/>
+            <Label Grid.Row="2" Grid.Column="1"  Content="{Binding SelectedOrder.FirstName}"/>
+            <Label Grid.Row="3" Grid.Column="1"  Content="{Binding SelectedOrder.LastName}"/>
+            <Label Grid.Row="4" Grid.Column="1"  Content="{Binding SelectedOrder.Comment}"/>
+
+
+            <Label Grid.Row="6" FontWeight="Bold" Content="Edit Order" />
+            <Label Grid.Row="7" Grid.Column="0" Content="Enter Order Comment" />
+            <TextBox Grid.Row="7" Grid.Column="1" x:Name="OrderComment" MinWidth="75"  Margin="5"/>
+            <Label Grid.Row="8" Grid.Column="0" Content="Enter new order menu key" />
+            <TextBox Grid.Row="8" Grid.Column="1" x:Name="NewOrderMenuKey" MinWidth="75"  Margin="5"/>
+            <Button Grid.Row="9" Grid.Column="0" Visibility ="{Binding SelectedUserRoleKey, Converter={StaticResource RoleConverter}}"
+                    x:Name="EditSelectedOrderByKey" Content="Edit Order" Margin="5"/>
+        </Grid>
+
     </Grid>
 
    

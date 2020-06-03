@@ -31,3 +31,7 @@ ORDERS
 
 Here we can look for orders by day, week or month. The displayed properties are Date, FirstName, LastName, MenuName and OrderStatusName
 TO-DO: Week and Month insert fields should be limited to (number of possible weeks and number of possible months/dropdown menu with months)
+
+EDIT ORDERS
+
+Here selected order will be shown with its properties. On the bottom you can edit selected orders add comment and new Menu Key TO-DO: Dropdown menu or more suitable selection option
